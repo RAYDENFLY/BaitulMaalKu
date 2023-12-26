@@ -1,0 +1,11 @@
+.bank-logo {
+    width: 100px; /* Ubah sesuai kebutuhan */
+    height: auto; /* Mempertahankan aspek rasio */
+    margin-right: 10px; /* Jarak antara logo dan teks rekening */
+    margin-bottom: 17px;
+}
+
+/* Gaya tambahan sesuai kebutuhan */
+.modal-body p {
+    margin-bottom: 15px;
+}
