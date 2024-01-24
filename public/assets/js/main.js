@@ -259,3 +259,14 @@
   new PureCounter();
 
 })()
+
+const pintara2Image = document.getElementById('pintara2');
+    heic2any({
+      blob: projects[3].imageUrl,
+      toType: 'image/jpeg',
+      quality: 0.7
+    }).then(function (result) {
+      pintara2Image.src = URL.createObjectURL(result);
+    }).catch(function (error) {
+      console.error(error);
+    });

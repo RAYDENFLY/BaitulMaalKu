@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+</head>
+<body>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <label for="projectName">Project Name:</label>
+        <input type="text" id="projectName" name="projectName" required>
+        
+        <label for="category">Category:</label>
+        <input type="text" id="category" name="category" required>
+        
+        <input type="file" name="image" id="imageInput" accept="image/*" required>
+        <button type="button" onclick="uploadImage()">Upload</button>
+    </form>
+
+    <div id="portfolio"></div>
+
+    <script src="/main.js"></script>
+</body>
+</html>

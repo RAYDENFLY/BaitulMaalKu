@@ -1,0 +1,17 @@
+[
+    { "title": "App 1", "category": "App", "imageUrl": "assets/img/portfolio/portfolio-1.jpg" },
+    { "title": "Web 3", "category": "Web", "imageUrl": "assets/img/portfolio/portfolio-2.jpg" },
+
+    { "title": "Pintara", 
+        "category": "Pintara", 
+        "imageUrl": "assets/img/portfolio/pintara/pintara1.jpg" },
+    { "title": "Pintara", 
+        "category": "Pintara", 
+        "imageUrl": "assets/img/portfolio/pintara/pintara3.jpg" },
+    { "title": "Pintara", 
+        "category": "Pintara", 
+        "imageUrl": "assets/img/portfolio/pintara/pintara4.jpg" },
+    { "title": "Pintara", 
+        "category": "Pintara", 
+        "imageUrl": "assets/img/portfolio/pintara/pintara (5).jpg" }
+  ]  
