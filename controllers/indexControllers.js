@@ -30,7 +30,7 @@ function generateCategoryData(folderPath, category) {
 exports.getIndex = (req, res) => {
     const dokumentasi = require('../json/dokumentasi.json');
 
-    const categories = ['Pintara', 'Akademi Berdaya']; // Ganti dengan kategori yang diinginkan
+    const categories = ['Pintara', 'Akademi Berdaya', 'Lainnya']; // Ganti dengan kategori yang diinginkan
     const imageData = generateImageData(categories);
 
     // Tampilkan hasil
@@ -40,11 +40,23 @@ exports.getIndex = (req, res) => {
 };
 
 exports.getDokumentasi = (req, res) => {
-    res.render('homePage/dokumentasi');
+    const dokumentasi = require('../json/dokumentasi.json');
+
+    const categories = ['Pintara', 'Akademi Berdaya', 'Lainnya']; // Ganti dengan kategori yang diinginkan
+    const imageData = generateImageData(categories);
+
+    // Tampilkan hasil
+    console.log(JSON.stringify(imageData, null, 2));
+    res.render('homePage/dokumentasi', {imageData, dokumentasi});
 };
+
+
 
 exports.getMitraKami = (req, res) => {
     res.render('homePage/mitra-kami');
+};
+exports.getKonfirmasiDonasi = (req, res) => {
+    res.render('homePage/konfirmasiDonasi');
 };
 
 exports.getTataKelola = (req, res) => {

@@ -43,7 +43,7 @@
     <div class="container text-center text-md-left" data-aos="fade-up">
       <h1>BaitulMaalKu</h1>
       <h2>Aku untuk umat</h2>
-      <a href="#about" class="btn-get-started scrollto">Get Started</a>
+      <a href="#about" class="btn-get-started scrollto">Tentang Kami</a>
     </div>
   </section><!-- End Hero -->
 
@@ -104,7 +104,7 @@
       <div class="col-md-6">
         <div class="icon-box">
           <div class="icon-img" style="position: absolute;">
-            <img src="assets/img/program/pintara1.png" alt="Pintara Icon" width="130" height="130">
+            <img src="assets/img/program/pintara.png" alt="Pintara Icon" width="130" height="130">
           </div>
           <div class="icon-content">
             <h4><a href="#">Pintara <br> (Project Inisiasi Petani Sejahtera)</a></h4>
@@ -115,49 +115,63 @@
 
         <div class="col-md-6 mt-4 mt-lg-0">
           <div class="icon-box">
-            <i class="bi bi-card-checklist"></i>
+            <div class="icon-img" style="position: absolute;">
+              <img src="assets\img\program\akademi.png" alt="Pintara Icon" width="130" height="130">
+            </div>
             <h4><a href="#">Akademi Berdaya</a></h4>
             <p>Akademi Berdaya merupakan  salah satu program pemberdayaan yang memiliki visi untuk mencetak pengusaha di bidang fashion dan tata busana.</p>
           </div>
         </div>
         <div class="col-md-6 mt-4">
           <div class="icon-box">
-            <i class="bi bi-bar-chart"></i>
+            <div class="icon-img" style="position: absolute;">
+              <img src="assets\img\program\lahan.png" alt="Pintara Icon" width="130" height="130">
+            </div>
             <h4><a href="#">Wakaf InovatifKu <br>Lahan Pertanian Produktif</a></h4>
             <p>Wakaf InovatifKu hadir untuk membebaskan lahan pertanian agar dapat kembali di produktifkan dan nilainya kekal.</p>
           </div>
         </div>
         <div class="col-md-6 mt-4">
           <div class="icon-box">
-            <i class="bi bi-binoculars"></i>
+            <div class="icon-img" style="position: absolute;">
+              <img src="assets\img\program\abah.png" alt="Pintara Icon" width="130" height="130">
+            </div>
             <h4><a href="#">Muliakan Abah Emak</a></h4>
             <p>Program dan project charity (santunan) yang di berikan kepada Abah Emak usia lanjut setiap bulan guna memenuhi kebutuhan asasi.</p>
           </div>
         </div>
         <div class="col-md-6 mt-4">
           <div class="icon-box">
-            <i class="bi bi-brightness-high"></i>
+            <div class="icon-img" style="position: absolute;">
+              <img src="assets\img\program\qurban.png" alt="Pintara Icon" width="130" height="130">
+            </div>
             <h4><a href="#">QurbanKu</a></h4>
             <p>BaitulMaalKu, menghadirkan project QurbanKu sebagai fasilitas para Mudhohi untuk melaksanakan ibadah qurban, agar masyarakat pesisir dan pelosok dapat merasakan momen keberkahan 'Idul Adha.</p>
           </div>
         </div>
         <div class="col-md-6 mt-4">
           <div class="icon-box">
-            <i class="bi bi-calendar4-week"></i>
+            <div class="icon-img" style="position: absolute;">
+              <img src="assets/img/program/quran.png" alt="Pintara Icon" width="130" height="130">
+            </div>
             <h4><a href="#">Tebar dan Pembinaan Qur'an dan Iqro di pelosok nusantara</a></h4>
             <p>Project ini sebagai gerakan pengentasan buta huruf hijaiyah di pelosok dan pesisir nusantara.</p>
           </div>
         </div>
         <div class="col-md-6 mt-4">
           <div class="icon-box">
-            <i class="bi bi-calendar4-week"></i>
+            <div class="icon-img" style="position: absolute;">
+              <img src="assets\img\program\yatim.png" alt="Pintara Icon" width="130" height="130">
+            </div>
             <h4><a href="#">Bahagiakan Yatim</a></h4>
             <p>Program dan project charity (santunan) yang di berikan kepada Yatim setiap bulan guna memenuhi kebutuhan asasi.</p>
           </div>
         </div>
         <div class="col-md-6 mt-4">
           <div class="icon-box">
-            <i class="bi bi-calendar4-week"></i>
+            <div class="icon-img" style="position: absolute;">
+              <img src="assets\img\program\sehat.png" alt="Pintara Icon" width="130" height="130">
+            </div>
             <h4><a href="#">Sehatku Mobile</a></h4>
             <p>Project ini sebagai tujuan fasilitas layanan kesehatan gratis dalam bentuk cek kesehatan keliling di pelosok dan pesisir Jawa Barat yang minim akses kesehatan.</p>
           </div>
@@ -257,12 +271,11 @@
     <!-- ======= Portfolio Section ======= -->
     <section id="portfolio" class="portfolio">
       <div class="container">
-
         <div class="section-title">
           <h2>Dokumentasi Kegiatan</h2>
           <p>Berikut ini adalah beberapa dokumentasi kegiatan kami</p>
         </div>
-
+    
         <div class="row">
           <div class="col-lg-12">
             <ul id="portfolio-flters">
@@ -270,33 +283,53 @@
               <li data-filter=".filter-pintara">Pintara</li>
               <li data-filter=".filter-akademi">Akademi Berdaya</li>
               <li data-filter=".filter-muliakan">Muliakan Abah Emak</li>
-              <li data-filter=".filter-web">Web</li>
+              <li data-filter=".filter-lainnya">Lainnya</li>
             </ul>
           </div>
         </div>
         
-
-        <div class="row portfolio-container">
-          <% imageData.forEach((project, index) => { %>
-              <div class="col-lg-4 col-md-6 portfolio-item filter-<%= project.category.toLowerCase() %> wow fadeInUp">
-                  <div class="portfolio-wrap">
-                      <figure>
-                          <img src="<%= project.imageUrl %>" class="img-fluid" alt="<%= project.title %>">
-                          <a href="<%= project.imageUrl %>" class="link-preview portfolio-lightbox" data-gallery="portfolioGallery" title="Preview"><i class="bx bx-plus"></i></a>
-                          <a href="#" class="link-details" title="More Details"><i class="bx bx-link"></i></a>
-                      </figure>
+        <div class="row portfolio-container" id="portfolio-container">
+          <% 
+            const categoryCounts = {};
+            imageData.forEach((project, index) => {
+              const category = project.category.toLowerCase();
+              if (!categoryCounts[category]) {
+                categoryCounts[category] = 1;
+              } else {
+                categoryCounts[category]++;
+              }
         
-                      <div class="portfolio-info">
-                          <h4><a href="#"><%= project.title %></a></h4>
-                          <p><%= project.category %></p>
-                      </div>
+              if (categoryCounts[category] <= 2) {
+          %>
+              <div class="col-lg-4 col-md-6 portfolio-item filter-<%= category %> wow fadeInUp">
+                <div class="portfolio-wrap">
+                  <figure>
+                    <img src="<%= project.imageUrl %>" class="img-fluid" alt="<%= project.title %>">
+                    <a href="<%= project.imageUrl %>" class="link-preview portfolio-lightbox" data-gallery="portfolioGallery" title="Preview"><i class="bx bx-plus"></i></a>
+                    <a href="#" class="link-details" title="More Details"><i class="bx bx-link"></i></a>
+                  </figure>
+            
+                  <div class="portfolio-info">
+                    <h4><a href="#"><%= project.title %></a></h4>
+                    <p><%= category %></p>
                   </div>
+                </div>
               </div>
-          <% }); %>
+          <% 
+              }
+            }); 
+          %>
         </div>
         
-      </div>
-    </section><!-- End Portfolio Section -->
+        <div class="row">
+          <div class="col-lg-12">
+            <a href="/dokumentasi" class="btn btn-primary">Lihat Semua Dokumentasi</a>
+          </div>
+        </div>
+        </div>
+        |</section>
+        
+    
 
     <!-- ======= Testimonials Section ======= -->
     <section id="testimonials" class="testimonials section-bg">
@@ -684,6 +717,11 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+
+
+  
+    
+  
 
 </body>
 

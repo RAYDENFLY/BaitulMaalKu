@@ -270,3 +270,5 @@ const pintara2Image = document.getElementById('pintara2');
     }).catch(function (error) {
       console.error(error);
     });
+
+    

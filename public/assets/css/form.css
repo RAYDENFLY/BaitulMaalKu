@@ -1,0 +1,15 @@
+/* Gaya kustom Anda bisa ditambahkan di sini */
+.form-container {
+    max-width: 600px;
+    margin: 50px auto;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-group {
+    flex: 0 0 30%; /* Sesuaikan lebar kolom sesuai kebutuhan */
+    margin-bottom: 15px;
+}

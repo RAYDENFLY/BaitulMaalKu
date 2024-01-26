@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 Not Found</title>
+  <!-- Include your CSS and other head elements here -->
+  <link href="assets/css/404.css" rel="stylesheet">
+
+   <!-- Favicons -->
+   <link href="assets/img/favicon.png" rel="icon">
+   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+ 
+   <!-- Google Fonts -->
+   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+ 
+   <!-- Vendor CSS Files -->
+   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+   <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+   <!-- Bootstrap JavaScript (Bootstrap.bundle.min.js) -->
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+ 
+   <!-- Template Main CSS File -->
+     <link href="assets/css/style.css" rel="stylesheet">
+     <link href="assets/css/kalkulator.css" rel="stylesheet">
+     <link href="assets/css/rekening.css" rel="stylesheet">
+
+</head>
+
+<body>
+      <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center">
+    <%- include('partials/navbar') %>
+  </header><!-- End Header -->
+
+    <div class="container">
+        <div class="copy-container center-xy">
+          <p>
+            404, page not found.
+          </p>
+          <span class="handle"></span>
+
+          <a href="/" class="btn btn-primary">Kembali ke menu utama</a>
+      
+        </div>
+      </div>
+      
+      
+      <svg version="1.1" id="cb-replay" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+         viewBox="0 0 279.9 297.3" style="enable-background:new 0 0 279.9 297.3;" xml:space="preserve">
+      <g>
+        <path d="M269.4,162.6c-2.7,66.5-55.6,120.1-121.8,123.9c-77,4.4-141.3-60-136.8-136.9C14.7,81.7,71,27.8,140,27.8
+          c1.8,0,3.5,0,5.3,0.1c0.3,0,0.5,0.2,0.5,0.5v15c0,1.5,1.6,2.4,2.9,1.7l35.9-20.7c1.3-0.7,1.3-2.6,0-3.3L148.6,0.3
+          c-1.3-0.7-2.9,0.2-2.9,1.7v15c0,0.3-0.2,0.5-0.5,0.5c-1.7-0.1-3.5-0.1-5.2-0.1C63.3,17.3,1,78.9,0,155.4
+          C-1,233.8,63.4,298.3,141.9,297.3c74.6-1,135.1-60.2,138-134.3c0.1-3-2.3-5.4-5.3-5.4l0,0C271.8,157.6,269.5,159.8,269.4,162.6z"/>
+      </g>
+      </svg>
+
+      <script>
+        var $copyContainer = $(".copy-container"),
+    $replayIcon = $('#cb-replay'),
+    $copyWidth = $('.copy-container').find('p').width();
+
+var mySplitText = new SplitText($copyContainer, {type:"words"}),
+    splitTextTimeline = new TimelineMax();
+var handleTL = new TimelineMax();
+
+// WIP - need to clean up, work on initial state and handle issue with multiple lines on mobile
+
+var tl = new TimelineMax();
+
+tl.add(function(){
+  animateCopy();
+  blinkHandle();
+}, 0.2)
+
+function animateCopy() {
+  mySplitText.split({type:"chars, words"}) 
+  splitTextTimeline.staggerFrom(mySplitText.chars, 0.001, {autoAlpha:0, ease:Back.easeInOut.config(1.7), onComplete: function(){
+    animateHandle()
+  }}, 0.05);
+}
+
+function blinkHandle() {
+  handleTL.fromTo('.handle', 0.4, {autoAlpha:0},{autoAlpha:1, repeat:-1, yoyo:true}, 0);
+}
+
+function animateHandle() {
+  handleTL.to('.handle', 0.7, {x:$copyWidth, ease:SteppedEase.config(12)}, 0.05);
+}
+
+$('#cb-replay').on('click', function(){
+  splitTextTimeline.restart()
+  handleTL.restart()
+})
+      </script>
+</body>
+
+</html>

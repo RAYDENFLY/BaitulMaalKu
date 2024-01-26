@@ -727,7 +727,7 @@ section {
 }
 
 .services .icon-box h4 {
-  margin-left: 70px;
+  margin-left: 84px;
   font-weight: 700;
   margin-bottom: 15px;
   font-size: 18px;
@@ -737,10 +737,11 @@ section {
 .services .icon-box h4 a {
   color: #384046;
   transition: 0.3s;
+
 }
 
 .services .icon-box p {
-  margin-left: 70px;
+  margin-left: 84px;
   line-height: 24px;
   font-size: 14px;
   padding-left: 47px;
@@ -764,9 +765,15 @@ section {
     text-align: left;
   }
   .services .icon-box p {
-    margin-left: 70px;
+    margin-left: 84px;
     line-height: 24px;
     font-size: 14px;
+    padding-left: 60px;
+    text-align: left;
+  }
+  .services .icon-box h4 {
+    margin-left: 84px;
+    line-height: 24px;
     padding-left: 60px;
     text-align: left;
   }

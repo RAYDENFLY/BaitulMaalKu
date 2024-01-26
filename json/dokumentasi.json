@@ -1,4 +1,5 @@
 [
+    { "note": "Ini salahhhhh, Kalo mau masukin gambar langsung upload ke assets/img/portfolio/"},
     { "title": "App 1", "category": "App", "imageUrl": "assets/img/portfolio/portfolio-1.jpg" },
     { "title": "Web 3", "category": "Web", "imageUrl": "assets/img/portfolio/portfolio-2.jpg" },
 
@@ -15,3 +16,5 @@
         "category": "Pintara", 
         "imageUrl": "assets/img/portfolio/pintara/pintara (5).jpg" }
   ]  
+
+  

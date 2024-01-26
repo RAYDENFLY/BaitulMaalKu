@@ -21,6 +21,7 @@ const indexRoutes = require('./routes/index');
 const adminRoutes = require('./routes/admin');
 const userRoutes = require('./routes/user');
 
+
 app.use('/', indexRoutes);
 app.use('/admin', adminRoutes);
 app.use('/user', userRoutes);
