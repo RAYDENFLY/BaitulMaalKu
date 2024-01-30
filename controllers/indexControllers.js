@@ -50,15 +50,11 @@ exports.getDokumentasi = (req, res) => {
     res.render('homePage/dokumentasi', {imageData, dokumentasi});
 };
 
-
-
 exports.getMitraKami = (req, res) => {
     res.render('homePage/mitra-kami');
-};
-exports.getKonfirmasiDonasi = (req, res) => {
-    res.render('homePage/konfirmasiDonasi');
 };
 
 exports.getTataKelola = (req, res) => {
     res.render('homePage/tataKelola');
 };
+

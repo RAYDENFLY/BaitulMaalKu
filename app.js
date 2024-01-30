@@ -20,11 +20,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 const indexRoutes = require('./routes/index');
 const adminRoutes = require('./routes/admin');
 const userRoutes = require('./routes/user');
-
+const layananRoutes = require('./routes/layanan');
+const tataKelolaRoutes = require('./routes/tatakelola');
+const aboutRoutes = require('./routes/about')
 
 app.use('/', indexRoutes);
 app.use('/admin', adminRoutes);
 app.use('/user', userRoutes);
+app.use('/layanan', layananRoutes);
+app.use('/tatakelola', tataKelolaRoutes)
+app.use('/about', aboutRoutes)
 
 // Server listening
 const PORT = process.env.PORT || 3000;
