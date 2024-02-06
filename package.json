@@ -4,7 +4,8 @@
   "description": "Web Official",
   "main": "index.js",
   "scripts": {
-    "test": "test.js"
+    "test": "test.js",
+    "start": "node app.js"
   },
   "keywords": [
     "web"
