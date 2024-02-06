@@ -1,0 +1,39 @@
+<!-- views/infaq.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir Pembayaran Infaq</title>
+</head>
+<body>
+    <h2>Formulir Pembayaran Infaq</h2>
+    <form action="/proses_pembayaran_infaq" method="post">
+        <label for="nominal">Nominal:</label>
+        <input type="number" id="nominal" name="nominal" required>
+
+        <label for="nama">Nama Lengkap:</label>
+        <input type="text" id="nama" name="nama" required>
+        <input type="checkbox" id="anonim" name="anonim">
+        <label for="anonim">Sembunyikan Nama (Anonim)</label>
+
+        <label for="wa">Nomor WhatsApp:</label>
+        <input type="tel" id="wa" name="wa" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="doa">Doa:</label>
+        <textarea id="doa" name="doa" required></textarea>
+
+        <label>Metode Pembayaran:</label>
+        <select name="metode_pembayaran" required>
+            <option value="transfer_bank">Transfer Bank</option>
+            <option value="tunai">Tunai</option>
+            <option value="kartu_kredit">Kartu Kredit/Debit</option>
+        </select>
+
+        <button type="submit">Proses Pembayaran</button>
+    </form>
+</body>
+</html>

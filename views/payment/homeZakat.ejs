@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>BaitulMaalKu - Mitra Kami</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <base href="/">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <!-- Bootstrap JavaScript (Bootstrap.bundle.min.js) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Template Main CSS File -->
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/kalkulator.css" rel="stylesheet">
+    <link href="assets/css/form.css" rel="stylesheet">
+
+      <!-- @TODO: replace SET_YOUR_CLIENT_KEY_HERE with your client key -->
+      <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="Mid-client-hz0wBC9Neu8vISps"></script>
+      <!-- Note: replace with src=" " for Production environment -->
+</head>
+
+<body>
+    <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center">
+    <%- include('../partials/navbar') %>
+  </header><!-- End Header -->
+
+  <main id="main">
+ 
+    
+    <!-- ======= Breadcrumbs ======= -->
+    <section class="breadcrumbs">
+        <div class="container">
+  
+          <div class="d-flex justify-content-between align-items-center">
+            <h2>Konfirmasi Donasi</h2>
+            <ol>
+              <li><a href="/">Home</a></li>
+              <li>Konfirmasi Donasi</li>
+            </ol>
+          </div>
+  
+        </div>
+      </section><!-- End Breadcrumbs -->
+  
+      <section class="inner-page">
+        <div class="form-container">
+              <div class="section-title">
+                <h2>Pembayaran Zakat</h2>
+                <p>Terima kasih atas kebaikan hati Anda! Kami senang memberitahu bahwa donasi Anda telah diterima dengan tulus hati. Dengan bantuan Anda, kami dapat terus mewujudkan perubahan positif dan memberikan dampak yang signifikan.</p>
+              </div>
+
+
+        <form action="/gate/payment/proses_pembayaran_zakat" method="post">
+          <label for="nominal">Nominal:</label>
+        <input type="number" name="nominal" required>
+        
+        <label for="nama">Nama:</label>
+        <input type="text" name="nama" required>
+
+        <label for="wa">Nomor WhatsApp:</label>
+        <input type="text" name="wa" required>
+
+        <label for="email">Email:</label>
+        <input type="email" name="email" required>
+
+        <!-- Add a hidden input field to store the transaction token -->
+        <input type="hidden" id="transactionToken" name="transactionToken" value="<%= transactionToken %>">
+
+        <button type="button" id="pay-button">Bayar Zakat</button>
+    </form>
+
+    </div>
+    </section></main>
+    <script type="text/javascript">
+      var payButton = document.getElementById('pay-button');
+      payButton.addEventListener('click', function () {
+          var transactionToken = document.getElementById('transactionToken').value;
+          // Trigger snap popup with the obtained transaction token
+          snap.pay(transactionToken);
+      });
+  </script>
+</body>
+</html>
