@@ -54,12 +54,12 @@ app.use('/about', aboutRoutes)
 app.post('/send-email', contactController.sendEmail);
 app.post('/send-donation-email', donationController.sendDonationEmail);
 
-app.use((req, res) => {
-    res.status(404).render('404', { message: 'Page Not Found' });
-});
 app.use('/gate/payment', zisPaymentRoutes)
 app.post('/gate/payment/proses_pembayaran_zakat', zisControllers.postPayment);
 
+app.use((req, res) => {
+    res.status(404).render('404', { message: 'Page Not Found' });
+});
 
 
 // Server listening
