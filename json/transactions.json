@@ -1,0 +1,27 @@
+[
+  {
+    "nama": "AZIS MAULANA SUHADA",
+    "email": "raydenfly84@gmail.com",
+    "nominal": "11111",
+    "jenisZakat": "maal"
+  },
+  {
+    "nama": "AZIS MAULANA SUHADA",
+    "email": "raydenfly84@gmail.com",
+    "nominal": "100",
+    "jenisZakat": "maal"
+  },
+  {
+    "nama": "AZIS MAULANA SUHADA",
+    "email": "raydenfly84@gmail.com",
+    "nominal": "10",
+    "jenisZakat": "maal"
+  },
+  {
+    "nama": "AZIS MAULANA SUHADA",
+    "email": "raydenfly84@gmail.com",
+    "nominal": "10",
+    "jenisZakat": "maal",
+    "orderId": "ORDER-1707292770616"
+  }
+]

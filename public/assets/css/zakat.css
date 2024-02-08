@@ -1,0 +1,53 @@
+/* Tambahkan gaya untuk modal */
+.modal {
+  display: none; /* Sembunyikan modal secara default */
+  position: fixed; /* Tetapkan posisi modal */
+  z-index: 1; /* Tingkatkan z-index modal di atas konten lain */
+  left: 0;
+  top: 0;
+  width: 100%; /* Buat modal menutupi seluruh layar */
+  height: 100%;
+  overflow: auto; /* Aktifkan gulir jika konten melebihi ukuran modal */
+  background-color: rgba(0,0,0,0.4); /* Warna latar belakang semi-transparan */
+}
+
+/* Gaya konten modal */
+.modal-content {
+  background-color: #fefefe;
+  margin: 20% auto; /* Letakkan modal di tengah layar */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Sesuaikan lebar konten modal */
+}
+
+/* Gaya untuk tombol tutup modal */
+.close {
+  color: #ffffff;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+input[type="number"],
+select {
+  height: 38px; /* Atur tinggi pilihan */
+  width: 100%;
+}
+textarea {
+    width: 100%;
+}
+.input-group {
+  display: flex;
+  align-items: center;
+}
+
+.input-group label {
+  margin-right: 5px;
+  width: 30px; /* Atur lebar label sesuai kebutuhan */
+}

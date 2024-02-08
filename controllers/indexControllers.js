@@ -1,5 +1,7 @@
 const fs = require('fs');
 const path = require('path');
+const nodemailer = require('nodemailer');
+const bodyParser = require('body-parser');
 
 const projectsPath = path.join(__dirname, '../json/dokumentasi.json');
 
@@ -14,23 +16,31 @@ function generateImageData(categories) {
 
     return allImageData;
 }
-
 function generateCategoryData(folderPath, category) {
     const imageFiles = fs.readdirSync(folderPath);
 
     const categoryImageData = imageFiles.map((filename, index) => {
-        const title = path.basename(filename, path.extname(filename));
-        const imageUrl = path.join('assets','img', 'portfolio', category.toLowerCase(), filename);
+        const title = capitalizeFirstLetter(category); // Menggunakan fungsi untuk mengubah huruf pertama menjadi besar
+        const imageUrl = path.join('assets', 'img', 'portfolio', category.toLowerCase(), filename);
         return { title, category, imageUrl };
     });
 
     return categoryImageData;
 }
 
+function capitalizeFirstLetter(word) {
+    // Membagi kata menjadi array kata
+    const words = word.split(' ');
+    // Mengubah huruf pertama setiap kata menjadi besar
+    const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+    // Menggabungkan kembali kata-kata menjadi satu string
+    return capitalizedWords.join(' ');
+}
+
 exports.getIndex = (req, res) => {
     const dokumentasi = require('../json/dokumentasi.json');
 
-    const categories = ['Pintara', 'Akademi Berdaya', 'Lainnya']; // Ganti dengan kategori yang diinginkan
+    const categories = ['Pintara', 'Akademi Berdaya', 'Tebar dan Pembinaan Quran', 'Donasi']; // Ganti dengan kategori yang diinginkan
     const imageData = generateImageData(categories);
 
     // Tampilkan hasil
@@ -42,7 +52,7 @@ exports.getIndex = (req, res) => {
 exports.getDokumentasi = (req, res) => {
     const dokumentasi = require('../json/dokumentasi.json');
 
-    const categories = ['Pintara', 'Akademi Berdaya', 'Lainnya']; // Ganti dengan kategori yang diinginkan
+    const categories = ['Pintara', 'Akademi Berdaya', 'quran', 'Donasi']; // Ganti dengan kategori yang diinginkan
     const imageData = generateImageData(categories);
 
     // Tampilkan hasil

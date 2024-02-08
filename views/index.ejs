@@ -287,7 +287,8 @@
               <li data-filter=".filter-pintara">Pintara</li>
               <li data-filter=".filter-akademi">Akademi Berdaya</li>
               <li data-filter=".filter-muliakan">Muliakan Abah Emak</li>
-              <li data-filter=".filter-lainnya">Lainnya</li>
+              <li data-filter=".filter-donasi">Donasi</li>
+              <li data-filter=".filter-tebar">Tebar dan Pembinaan Qur'an</li>
             </ul>
           </div>
         </div>
@@ -314,8 +315,7 @@
                   </figure>
             
                   <div class="portfolio-info">
-                    <h4><a href="#"><%= project.title %></a></h4>
-                    <p><%= category %></p>
+                    <h4><a href="#"><%= category %></a></h4>
                   </div>
                 </div>
               </div>
@@ -376,7 +376,7 @@
 
         <div class="row mt-5 justify-content-center">
           <div class="col-lg-10">
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+            <form action="/send-email" method="post" role="form" class="php-email-form">
               <div class="row">
                 <div class="col-md-6 form-group">
                   <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
@@ -392,16 +392,12 @@
                 <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
               </div>
               <div class="my-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
+                <div class="sent-message" id="success-message">Pesan anda telah dikirim. Terima Kasih!</div>
               </div>
               <div class="text-center"><button type="submit">Send Message</button></div>
-            </form>
+            </form>            
           </div>
-
         </div>
-
       </div>
     </section><!-- End Contact Section -->
 
@@ -572,7 +568,32 @@
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 
-
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('form.php-email-form').submit(function (e) {
+        e.preventDefault();
+        
+        var formData = $(this).serialize();
+        
+        $.ajax({
+          type: 'POST',
+          url: '/send-email',
+          data: formData,
+          success: function (response) {
+            console.log(response);
+            // Tindakan setelah menerima respons dari server
+            // Menampilkan pesan sukses
+            $('#success-message').fadeIn().delay(3000).fadeOut();
+          },
+          error: function (error) {
+            console.log(error);
+            // Tindakan jika ada kesalahan
+          },
+        });
+      });
+    });
+  </script>
   
     
   

@@ -126,7 +126,7 @@
 
             <!-- Tambahkan rincian donasi lainnya sesuai kebutuhan -->
 
-            <button type="button" class="confirmation-btn" onclick="sendWhatsAppMessage()">Konfirmasi Donasi</button>
+            <button type="button" class="confirmation-btn" id="confirmDonationBtn">Konfirmasi Donasi</button>
         </form>
       </div>
     </section>
@@ -151,7 +151,68 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+  <script>
+    function sendWhatsAppMessage() {
+        const fullName = document.getElementById('fullName').value;
+        const phoneNumber = '08111600660'; // Ganti dengan nomor yang benar
+        const donationAmount = document.getElementById('donationAmount').value;
+        const selectedProgram = document.getElementById('selectedProgram').value;
+
+        const message = `Halo, saya ${fullName}. Saya telah melakukan donasi sebesar ${donationAmount} untuk ${selectedProgram}.`;
+
+        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, '_blank');
+
+        // Jika Anda ingin mengaktifkan pengiriman email juga, uncomment baris berikut:
+        // sendEmail();
+    }
+
+    document.getElementById('confirmDonationBtn').addEventListener('click', sendWhatsAppMessage);
+</script>
+<script>
+  $(document).ready(function() {
+      // Fungsi untuk mengambil nilai dari formulir dan mengirimnya ke server
+      function sendFormData() {
+          const formData = {
+              fullName: $('#fullName').val(),
+              phoneNumber: $('#phoneNumber').val(),
+              emailContact: $('#emailContact').val(),
+              nominal: $('#nominal').val(),
+              qty: $('#qty').val(),
+              atasNama: $('#atasNama').val(),
+              selectedProgram: $('#selectedProgram').val(),
+              donationAmount: $('#donationAmount').val(),
+              paymentMethod: $('#paymentMethod').val(),
+              cardOwnerName: $('#cardOwnerName').val(),
+              cardNumber: $('#cardNumber').val(),
+              // tambahkan atribut formulir lainnya sesuai kebutuhan
+          };
+  
+          // Kirim data ke server menggunakan AJAX
+          $.ajax({
+              type: 'POST',
+              url: '/send-donation-email', // Ganti dengan URL endpoint yang sesuai di server Anda
+              data: formData,
+              success: function(response) {
+                  // Handle sukses, misalnya menampilkan pesan sukses kepada pengguna
+                  alert('Donation confirmation successful!');
+              },
+              error: function(error) {
+                  // Handle error, misalnya menampilkan pesan kesalahan kepada pengguna
+                  alert('Donation confirmation failed. Please try again later.');
+              }
+          });
+      }
+  
+      // Menambahkan event listener pada tombol konfirmasi donasi
+      $('#confirmDonationBtn').on('click', function() {
+          // Panggil fungsi untuk mengirim data ke server
+          sendFormData();
+      });
+  });
+  </script>
 </body>
 
 </html>

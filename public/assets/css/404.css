@@ -58,11 +58,11 @@ p {
   position: absolute;
   overflow: inherit;
   cursor: pointer;
-
-  &:hover {
+}
+&:hover {
     fill: #888;
   }
-}
+
 
 .back-to-main-btn {
   background-color: #007bff;
