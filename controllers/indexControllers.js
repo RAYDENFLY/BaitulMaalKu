@@ -52,7 +52,7 @@ exports.getIndex = (req, res) => {
 exports.getDokumentasi = (req, res) => {
     const dokumentasi = require('../json/dokumentasi.json');
 
-    const categories = ['Pintara', 'Akademi Berdaya', 'quran', 'Donasi']; // Ganti dengan kategori yang diinginkan
+    const categories = ['Pintara', 'Akademi Berdaya', 'Tebar dan Pembinaan Quran', 'Donasi']; // Ganti dengan kategori yang diinginkan
     const imageData = generateImageData(categories);
 
     // Tampilkan hasil
