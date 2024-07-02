@@ -5,8 +5,8 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
     <title>BaitulMaalKu - Company Profile</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
+    <meta id="meta-description" content="BaitulMaalKu didirikan atas semangat dakwah di bidang keuangan sosial Islam terutama pada isu zakat, infaq, dan wakaf. Legalitas sebagai Yayasan dan LAZ diperoleh pada tahun 2019. BaitulMaalKu resmi menjadi lembaga amil zakat pertama di Karawang yang legal berdasarkan rekomendasi BAZNAS dan SK dari Kementerian Agama RI. Pada tahun 2020 dan 2021, BaitulMaalKu beroperasi berdasarkan 4 pilar sesuai kebutuhan masyarakat dan tujuan pembangunan berkelanjutan (SDG’s)." name="description">
+    <meta id="meta-keywords" content="BaitulMaalKu, zakat, infaq, wakaf, keuangan sosial Islam, yayasan, LAZ, BAZNAS, Kementerian Agama RI, amil zakat, Karawang, tujuan pembangunan berkelanjutan, SDG’s" name="keywords">
 
     <!-- Favicons -->
     <link href="/assets/img/favicon.png" rel="icon">
@@ -324,7 +324,7 @@
                 const clickX = event.clientX;
 
                 // Adjust the percentage as needed
-                const edgePercentage = 0.45; // 15% dari lebar jendela
+                const edgePercentage = 0.35; // 15% dari lebar jendela
 
                 // Change slide on left side click
                 if (clickX < width * edgePercentage) {
@@ -338,5 +338,30 @@
             });
         });
     </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const userLang = navigator.language || navigator.userLanguage;
+                if (userLang !== 'id') { // Check if the user's language is not Indonesian
+                    const descriptionMeta = document.getElementById('meta-description');
+                    const keywordsMeta = document.getElementById('meta-keywords');
+    
+                    // Function to fetch translations
+                    async function translateText(text, targetLang) {
+                        const response = await fetch(`https://api.example.com/translate?text=${encodeURIComponent(text)}&target=${targetLang}`);
+                        const data = await response.json();
+                        return data.translatedText;
+                    }
+    
+                    // Translate and update meta tags
+                    translateText(descriptionMeta.content, userLang).then(translatedDescription => {
+                        descriptionMeta.content = translatedDescription;
+                    });
+    
+                    translateText(keywordsMeta.content, userLang).then(translatedKeywords => {
+                        keywordsMeta.content = translatedKeywords;
+                    });
+                }
+            });
+        </script>
 </body>
 </html>
