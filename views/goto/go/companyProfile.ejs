@@ -13,7 +13,7 @@
     <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
     <!-- Vendor CSS Files -->
     <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -42,6 +42,7 @@
             max-width: 80%;
             max-height: 80vh;
             border: 1px solid #ccc;
+            margin-bottom: 20px;
         }
         .pdf-controls {
             position: absolute;
@@ -73,38 +74,11 @@
             color: #666;
         }
 
-        /* Responsive adjustments */
-        @media (max-width: 1118px) {
-            .pdf-controls {
-                display: none; /* Hide controls on mobile and tablet */
-            }
-            .mobile-instructions {
-                display: block; /* Show instructions on mobile and tablet */
-                padding-bottom: 20px;
-            }
-            .download-btn {
-            position: absolute;
-            top: 103%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #4CAF50; /* Green */
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-            outline: none;
-            transition: background-color 0.3s ease;
-        }
-        }
         .download-btn {
             position: absolute;
-            top: 102%;
+            margin-top: 480px;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translateX(-50%);
             background-color: #4CAF50; /* Green */
             color: white;
             padding: 10px 20px;
@@ -119,6 +93,73 @@
         }
         .download-btn:hover {
             background-color: #45a049;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1120px) {
+            .pdf-controls {
+                display: none; /* Hide controls on mobile and tablet */
+            }
+            .mobile-instructions {
+                display: block; /* Show instructions on mobile and tablet */
+                margin-top: -4px;
+                padding-bottom: 15px;
+            }
+            .pdf-container {
+                padding-bottom: 100px; /* Ensure enough space for the download button */
+            }
+            .download-btn {
+                bottom: 60px; /* Move the button up to avoid overlap with instructions */
+            }
+        }
+        @media (max-width: 768px) {
+            .download-btn {
+                font-size: 14px;
+                padding: 8px 16px;
+            
+            }
+            .mobile-instructions {
+                margin-top: -4px;
+                padding-bottom: 33px; /* Adjust padding to bring instructions up */
+            }
+        }
+        @media (max-width: 564px) {
+            .pdf-container {
+                padding-top: 10px;
+            }
+            .download-btn {
+                font-size: 12px;
+                padding: 6px 12px;
+               
+            }
+            #pdf-render {
+                max-width: 100%;
+                max-height: 60vh;
+                margin-bottom: 10px;
+            }
+            .mobile-instructions {
+                margin-top: 10px;
+                padding-bottom: 10px; /* Adjust padding to bring instructions up */
+            }
+        }
+        @media (max-width: 420px) {
+            .pdf-container {
+                padding-top: 10px;
+            }
+            .download-btn {
+                font-size: 12px;
+                padding: 6px 12px;
+                bottom: 100px; /* Move the button up for very small screens */
+            }
+            #pdf-render {
+                max-width: 100%;
+                max-height: 60vh;
+                margin-bottom: 10px;
+            }
+            .mobile-instructions {
+                margin-top: 10px;
+                padding-bottom: 10px; /* Adjust padding to bring instructions up */
+            }
         }
     </style>
 </head>
@@ -141,7 +182,7 @@
     <div class="pdf-container">
         <div class="pdf-controls">
             <button id="prev-page">Previous Page</button>
-            <span style="margin-bottom: 450px; margin-right: 10px;">Page: <span id="page-num"></span> / <span id="page-count"></span></span>
+            <span style="margin-bottom: 457px; margin-right: 10px;">Page: <span id="page-num"></span> / <span id="page-count"></span></span>
             <button id="next-page" style="margin-right: 210px;">Next Page</button>
         </div>
         <canvas id="pdf-render"></canvas>
