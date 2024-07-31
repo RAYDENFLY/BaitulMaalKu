@@ -6,7 +6,7 @@ exports.getLogin = (req, res) => {
 };
 
 exports.postLogin = async (req, res) => {
-    const { username, password } = req.body;
+    const { username, password } = req.body; 
 
     try {
         const result = await connection.execute('SELECT * FROM accounts WHERE username = ?', [username]);
