@@ -6,7 +6,9 @@ const multer = require('multer');
 const path = require('path');
 const app = express();
 const dotenv = require("dotenv");
+const rateLimit = require('express-rate-limit');
 const cors = require('cors');
+
 dotenv.config();
 
 app.use(cors());
@@ -53,8 +55,14 @@ app.use('/about', aboutRoutes);
 // Goto Use
 app.use('/go', gotoRoutes);
 
+const emailLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 menit
+    max: 100, // Maksimum 100 permintaan per IP dalam periode waktu
+    message: 'Too many requests from this IP, please try again later.',
+  });
+  
 // Handle form submission
-app.post('/send-email', contactController.sendEmail);
+app.post('/send-email', emailLimiter, contactController.sendEmail);
 app.post('/send-donation-email', donationController.sendDonationEmail);
 
 app.use('/gate/payment', zisPaymentRoutes);

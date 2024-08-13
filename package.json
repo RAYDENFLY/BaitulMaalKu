@@ -19,6 +19,7 @@
     "dotenv": "^16.0.3",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
+    "express-rate-limit": "^7.4.0",
     "express-session": "^1.17.3",
     "fs": "^0.0.1-security",
     "jimp": "^0.22.12",
@@ -30,6 +31,7 @@
     "path": "^0.12.7",
     "pdfkit": "^0.14.0",
     "qrcode": "^1.5.3",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "validator": "^13.12.0"
   }
 }

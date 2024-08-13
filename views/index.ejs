@@ -47,7 +47,7 @@
     <div class="container text-center text-md-left" data-aos="fade-up">
       <h1>BaitulMaalKu</h1>
       <h2>Aku untuk umat</h2>
-      <a href="#about" class="btn-get-started scrollto">Tentang Kami</a>
+      <a href="#about" class="btn-get-started scrollto">Yuk Donasi !</a>
     </div>
   </section><!-- End Hero -->
 
@@ -285,11 +285,12 @@
             <ul id="portfolio-flters">
               <li data-filter="*" class="filter-active">Semua</li>
               <li data-filter=".filter-pintara">Pintara</li>
-              <li data-filter=".filter-akademi">Akademi Berdaya</li>
+              <li data-filter=".filter-akademi-mnk">Akademi Berdaya PT MNK</li>
+              <li data-filter=".filter-akademi-cimb">Akademi Berdaya CIMB Niaga</li>
               <li data-filter=".filter-muliakan">Muliakan Abah Emak</li>
-              <li data-filter=".filter-donasi">Donasi</li>
+              <li data-filter=".filter-donasi">Kemanusiaan</li>
               <li data-filter=".filter-tebar">Tebar dan Pembinaan Qur'an</li>
-            </ul>
+            </ul>            
           </div>
         </div>
         
@@ -359,7 +360,7 @@
                 <div class="col-lg-4 info mt-4 mt-lg-0">
                   <i class="bi bi-envelope"></i>
                   <h4>Email:</h4>
-                  <p>info@baitulmaalku.com<br>contact@baitulmaalku.com</p>
+                  <p>baitulmaalku@gmail.com<br>careline@baitulmaalku.com</p>
                 </div>
 
                 <div class="col-lg-4 info mt-4 mt-lg-0">
@@ -376,6 +377,7 @@
 
         <div class="row mt-5 justify-content-center">
           <div class="col-lg-10">
+            <script src="https://www.google.com/recaptcha/api.js" async defer></script>
             <form action="/send-email" method="post" role="form" class="php-email-form">
               <div class="row">
                 <div class="col-md-6 form-group">
@@ -391,6 +393,7 @@
               <div class="form-group mt-3">
                 <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
               </div>
+              <div class="g-recaptcha" data-sitekey="6Lf17SIqAAAAAPJ5IMGORjsV4dIZE61Z70NY7tQu"></div>
               <div class="my-3">
                 <div class="sent-message" id="success-message">Pesan anda telah dikirim. Terima Kasih!</div>
               </div>
@@ -594,7 +597,27 @@
       });
     });
   </script>
-  
+   <script>
+    document.getElementById('send-message-button').addEventListener('click', function() {
+      var recaptcha = document.querySelector('.g-recaptcha');
+      recaptcha.style.display = 'block'; // Tampilkan reCAPTCHA
+      grecaptcha.execute(); // Jalankan reCAPTCHA
+    });
+
+    // Anda juga bisa menambahkan event listener untuk submit form jika diperlukan
+    document.getElementById('contact-form').addEventListener('submit', function(event) {
+      event.preventDefault(); // Mencegah submit form otomatis
+      // Lakukan verifikasi reCAPTCHA dan submit form jika valid
+      var response = grecaptcha.getResponse();
+      if (response.length === 0) {
+        alert('Please complete the reCAPTCHA.');
+      } else {
+        // Lakukan verifikasi reCAPTCHA di sisi server
+        this.submit(); // Submit form setelah reCAPTCHA terverifikasi
+      }
+    });
+  </script>
+
     
   
 
