@@ -33,6 +33,7 @@
     <link href="assets/css/style.css" rel="stylesheet">
     <link href="assets/css/kalkulator.css" rel="stylesheet">
     <link href="assets/css/rekening.css" rel="stylesheet">
+    <link href="assets/css/campaign.css" rel="stylesheet">
 </head>
 
 <body onload="changeZakatCategory()">
@@ -94,7 +95,34 @@
           </div>
       </div>
   </section><!-- End What We Do Section -->
-  
+
+  <!--
+======= Campaign Section ======= 
+<section id="campaign" class="campaign section-bg">
+  <div class="container">
+    <div class="section-title">
+      <h2>Yuk sedekah!</h2>
+      <p>mari berbagi kebahagiaan dengan mendukung program-program di bawah ini</p>
+    </div>
+    <div class="campaigns">
+      <div class="campaign">
+          <img src="assets/img/donasi/muliakan.png" alt="Indonesia Bantu Kuatkan Palestina">
+          <div class="campaign-info">
+              <span class="badge">Campaign</span>
+              <h3>Muliakan Abah Emak</h3>
+              <div class="progress">
+                <div class="progress-bar" style="width: 50%;"></div>
+            </div>
+            <p class="amount-collected">Rp24.359.867 dari Rp500.000.000</p>
+            <button class="donasi-btn" onclick="openModal()">Donasi</button>
+            
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+-->
+
   <section id="services" class="services section-bg">
     <div class="container">
 
@@ -108,7 +136,7 @@
       <div class="col-md-6">
         <div class="icon-box">
           <div class="icon-img" style="position: absolute;">
-            <img src="assets/img/program/pintara.png" alt="Pintara Icon" width="130" height="130">
+            <img src="assets\img\program/pintara.png" alt="Pintara Icon" width="130" height="130">
           </div>
           <div class="icon-content">
             <h4><a href="#">Pintara <br> (Program Inisiasi Bina Petani Sejahtera)</a></h4>
@@ -414,6 +442,26 @@
 
   <!-- modal-->
 
+  <div id="donasiModal" class="modal fade">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Donasi untuk Muliakan Abah Emak</h2>
+        <form>
+            <label for="donasiAmount">Jumlah Donasi:</label>
+            <input type="number" id="donasiAmount" name="donasiAmount" min="1000" step="1000" required>
+            
+            <label for="donasiMethod">Metode Pembayaran:</label>
+            <select id="donasiMethod" name="donasiMethod" required>
+                <option value="transferBank">Transfer Bank</option>
+                <option value="ewallet">E-Wallet</option>
+                <option value="creditCard">Kartu Kredit</option>
+            </select>
+            
+            <button type="submit" class="submit-btn">Kirim Donasi</button>
+        </form>
+    </div>
+</div>
+
   <!-- Modal -->
   <div class="modal fade" id="zakatModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -616,6 +664,26 @@
         this.submit(); // Submit form setelah reCAPTCHA terverifikasi
       }
     });
+  </script>
+  <script>
+    // Function to open the modal
+function openModal() {
+    document.getElementById("donasiModal").style.display = "block";
+}
+
+// Function to close the modal
+function closeModal() {
+    document.getElementById("donasiModal").style.display = "none";
+}
+
+// Close the modal if the user clicks anywhere outside of the modal
+window.onclick = function(event) {
+    const modal = document.getElementById("donasiModal");
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
   </script>
 
     

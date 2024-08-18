@@ -1,0 +1,91 @@
+.campaigns {
+    display: flex;
+    justify-content: center; /* Center the campaigns horizontally */
+    gap: 20px; /* Optional: add space between columns */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    padding: 20px 0;
+    margin: 0 auto; /* Center the container */
+    max-width: 100%; /* Ensure it doesn't exceed the container's width */
+}
+
+.campaign {
+    flex: 0 0 16%; /* Each campaign takes up 16% of the width */
+    min-width: 260px; /* Optional: set a minimum width */
+    background: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.campaign img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: -20px;
+}
+
+.campaign-info {
+    padding: 10px 0;
+}
+
+.campaign-info h3 {
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+
+.campaign-info p {
+    margin: 5px 0;
+}
+
+.section-title h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+/* Progress bar styles */
+.progress {
+    background-color: #e0e0e0;
+    border-radius: 20px;
+    overflow: hidden;
+    height: 10px;
+    margin: 10px 0;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #007bff;
+    border-radius: 20px;
+}
+
+.amount-collected {
+    font-weight: bold;
+    margin-top: 5px;
+    color: #333;
+}
+
+/* Centered section title */
+.section-title h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Donasi button styles */
+.donasi-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.donasi-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Modal Styles */
