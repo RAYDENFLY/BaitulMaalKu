@@ -15,7 +15,7 @@ function generateImageData(categories) {
     const allImageData = [];
 
     categories.forEach(category => {
-        const folderPath = `public/assets/img/portfolio/${category.toLowerCase()}`;
+        const folderPath = `assets/img/portfolio/${category.toLowerCase()}`;
         const categoryImageData = generateCategoryData(folderPath, category);
         allImageData.push(...categoryImageData);
     });
