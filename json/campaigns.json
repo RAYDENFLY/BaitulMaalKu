@@ -1,0 +1,17 @@
+[
+    {
+      "imgSrc": "assets/img/donasi/muliakan.png",
+      "title": "Muliakan Abah Emak",
+      "progressPercentage": 50,
+      "amountCollected": "Rp24.359.867",
+      "goalAmount": "Rp500.000.000"
+    },
+    {
+      "imgSrc": "assets/img/donasi/palestina.png",
+      "title": "Indonesia Bantu Kuatkan Palestina",
+      "progressPercentage": 30,
+      "amountCollected": "Rp15.000.000",
+      "goalAmount": "Rp50.000.000"
+    }
+  ]
+  

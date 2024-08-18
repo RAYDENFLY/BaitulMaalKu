@@ -5,6 +5,12 @@ const bodyParser = require('body-parser');
 
 const projectsPath = path.join(__dirname, '../json/dokumentasi.json');
 
+// Fungsi untuk membaca dan memparsing file JSON
+function readJSONFile(filePath) {
+    const data = fs.readFileSync(filePath, 'utf8');
+    return JSON.parse(data);
+}
+
 function generateImageData(categories) {
     const allImageData = [];
 
@@ -39,14 +45,16 @@ function capitalizeFirstLetter(word) {
 
 exports.getIndex = (req, res) => {
     const dokumentasi = require('../json/dokumentasi.json');
+    const campaignsPath = path.join(__dirname, '../json/campaigns.json');
 
     const categories = ['Pintara', 'Akademi-CIMB', 'QurbanKu', 'Akademi-MNK']; // Ganti dengan kategori yang diinginkan
     const imageData = generateImageData(categories);
+    const campaigns = readJSONFile(campaignsPath);
 
     // Tampilkan hasil
     console.log(JSON.stringify(imageData, null, 2));
 
-    res.render('index', { imageData, dokumentasi });
+    res.render('index', { imageData, dokumentasi, campaigns });
 };
 
 exports.getDokumentasi = (req, res) => {
