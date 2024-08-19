@@ -6,16 +6,19 @@
     padding: 20px 0;
     margin: 0 auto; /* Center the container */
     max-width: 100%; /* Ensure it doesn't exceed the container's width */
+    flex-wrap: nowrap; /* Prevent items from wrapping to a new line */
+    scroll-behavior: smooth; /* Smooth scrolling */
 }
 
 .campaign {
     flex: 0 0 16%; /* Each campaign takes up 16% of the width */
-    min-width: 260px; /* Optional: set a minimum width */
+    min-width: 260px; /* Ensure a minimum width */
     background: #fff;
     border-radius: 8px;
     padding: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
+    margin-right: 10px;
 }
 
 .campaign img {
@@ -23,6 +26,7 @@
     height: auto;
     border-radius: 8px;
     margin-bottom: -20px;
+    display: block;
 }
 
 .campaign-info {
@@ -89,3 +93,49 @@
 }
 
 /* Modal Styles */
+
+.campaigns::-webkit-scrollbar {
+    height: 8px;
+}
+
+.campaigns::-webkit-scrollbar-thumb {
+    background-color: #cccccc;
+    border-radius: 4px;
+}
+
+.campaigns::-webkit-scrollbar-track {
+    background-color: #f0f0f0;
+}
+
+@media (max-width: 768px) {
+    .campaigns {
+        justify-content: flex-start; /* Start aligning campaigns to the left */
+        padding: 10px; /* Reduce padding for more space */
+        gap: 10px; /* Reduce gap between campaigns */
+    }
+
+    .campaign {
+        flex: 0 0 80%; /* Each campaign takes up 80% of the width on mobile */
+        max-width: 80%; /* Ensure maximum width does not exceed 80% */
+        margin-right: 15px; /* Add margin between campaigns */
+    }
+}
+
+@media only screen and (min-device-width: 414px) and (max-device-width: 896px) and (-webkit-device-pixel-ratio: 2) {
+    /* Gaya khusus untuk iPhone XR */
+    body {
+        font-size: 16px; /* Sesuaikan ukuran font global */
+    }
+
+    .campaign-info h3 {
+        font-size: 1.1rem; /* Sesuaikan ukuran font judul */
+    }
+
+    .campaign-info p {
+        font-size: 0.9rem; /* Sesuaikan ukuran font teks */
+    }
+
+    .donasi-btn {
+        font-size: 0.9rem; /* Sesuaikan ukuran tombol donasi */
+    }
+}

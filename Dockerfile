@@ -10,6 +10,7 @@ COPY package*.json ./
 # Install dependensi
 RUN npm install
 
+
 # Salin kode aplikasi ke dalam container
 COPY . .
 
