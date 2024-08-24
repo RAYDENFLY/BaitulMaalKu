@@ -116,8 +116,8 @@
 
     .campaign {
         flex: 0 0 80%; /* Each campaign takes up 80% of the width on mobile */
-        max-width: 80%; /* Ensure maximum width does not exceed 80% */
-        margin-right: 15px; /* Add margin between campaigns */
+        max-width: 100%; /* Ensure maximum width does not exceed 80% */
+        margin: auto; /* Add margin between campaigns */
     }
 }
 

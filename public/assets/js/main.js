@@ -271,4 +271,11 @@ const pintara2Image = document.getElementById('pintara2');
       console.error(error);
     });
 
+    document.querySelectorAll('.close').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        const modal = bootstrap.Modal.getInstance(document.getElementById('donasiModal'));
+        modal.hide();
+      });
+    });
+    
     
