@@ -1,82 +1,103 @@
+/* CSS untuk Campaign Section */
 .campaigns {
     display: flex;
-    justify-content: center; /* Center the campaigns horizontally */
-    gap: 20px; /* Optional: add space between columns */
-    overflow-x: auto; /* Enable horizontal scrolling */
+    justify-content: center;
+    gap: 20px;
+    overflow-x: auto;
     padding: 20px 0;
-    margin: 0 auto; /* Center the container */
-    max-width: 100%; /* Ensure it doesn't exceed the container's width */
-    flex-wrap: nowrap; /* Prevent items from wrapping to a new line */
-    scroll-behavior: smooth; /* Smooth scrolling */
-}
-
-.campaign {
-    flex: 0 0 16%; /* Each campaign takes up 16% of the width */
-    min-width: 260px; /* Ensure a minimum width */
+    margin: 0 auto;
+    max-width: 100%;
+    flex-wrap: nowrap;
+    scroll-behavior: smooth;
+  }
+  
+  .campaign {
+    flex: 0 0 22%;
+    min-width: 280px;
     background: #fff;
     border-radius: 8px;
-    padding: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     text-align: center;
-    margin-right: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  /* CSS untuk memusatkan konten saat QRIS dipilih */
+.qris-center {
+    text-align: center;
 }
 
-.campaign img {
+.qris-center .bank-logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+  
+  .campaign:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .campaign img {
     width: 100%;
     height: auto;
     border-radius: 8px;
-    margin-bottom: -20px;
+    margin-bottom: 10px;
     display: block;
-}
-
-.campaign-info {
-    padding: 10px 0;
-}
-
-.campaign-info h3 {
+  }
+  
+  .campaign-info {
+    padding: 15px 0;
+  }
+  
+  .campaign-info h3 {
     font-size: 1.2rem;
-    margin: 10px 0;
-}
-
-.campaign-info p {
+    margin-bottom: 18px;
+  }
+  
+  .campaign-info p {
     margin: 5px 0;
-}
+  }
 
-.section-title h2 {
+  .no-campaigns-message {
     text-align: center;
-    margin-bottom: 20px;
-    margin-top: 30px;
-}
-
-/* Progress bar styles */
-.progress {
-    background-color: #e0e0e0;
-    border-radius: 20px;
-    overflow: hidden;
-    height: 10px;
-    margin: 10px 0;
-}
-
-.progress-bar {
-    height: 100%;
-    background-color: #007bff;
-    border-radius: 20px;
-}
-
-.amount-collected {
+    font-size: 18px;
+    color: #555;
+    margin-top: 20px;
+  }
+  
+  
+  .amount-collected {
     font-weight: bold;
     margin-top: 5px;
     color: #333;
-}
-
-/* Centered section title */
-.section-title h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-/* Donasi button styles */
-.donasi-btn {
+    font-size: 0.9rem; /* Ukuran font untuk teks 'Terkumpul' */
+    padding-bottom: 5px;
+  }
+  
+  .amount-blue {
+    color: #007bff; /* Warna biru untuk angka */
+  }
+  
+  /* Progress bar */
+  .progress {
+    background-color: #e0e0e0;
+    border-radius: 20px;
+    overflow: hidden;
+    height: 8px;
+    margin: 10px 0;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    background-color: #007bff;
+    border-radius: 20px;
+    transition: width 0.6s ease;
+  }
+  
+  /* Tombol Donasi */
+  .donasi-btn {
     background-color: #007bff;
     color: white;
     border: none;
@@ -86,56 +107,92 @@
     cursor: pointer;
     margin-top: 10px;
     transition: background-color 0.3s ease;
-}
-
-.donasi-btn:hover {
+  }
+  
+  .donasi-btn:hover {
     background-color: #0056b3;
-}
-
-/* Modal Styles */
-
-.campaigns::-webkit-scrollbar {
+  }
+  
+  /* Scrollbar styling */
+  .campaigns::-webkit-scrollbar {
     height: 8px;
-}
-
-.campaigns::-webkit-scrollbar-thumb {
+  }
+  
+  .campaigns::-webkit-scrollbar-thumb {
     background-color: #cccccc;
     border-radius: 4px;
-}
-
-.campaigns::-webkit-scrollbar-track {
+  }
+  
+  .campaigns::-webkit-scrollbar-track {
     background-color: #f0f0f0;
-}
-
-@media (max-width: 768px) {
+  }
+  
+  /* Responsif untuk perangkat mobile */
+  @media (max-width: 768px) {
     .campaigns {
-        justify-content: flex-start; /* Start aligning campaigns to the left */
-        padding: 10px; /* Reduce padding for more space */
-        gap: 10px; /* Reduce gap between campaigns */
+      justify-content: flex-start;
+      padding: 5px;
+      gap: 5px;
     }
-
+  
     .campaign {
-        flex: 0 0 80%; /* Each campaign takes up 80% of the width on mobile */
-        max-width: 100%; /* Ensure maximum width does not exceed 80% */
-        margin: auto; /* Add margin between campaigns */
+      flex: 0 0 80%;
+      max-width: 100%;
+      margin: auto;
     }
-}
-
-@media only screen and (min-device-width: 414px) and (max-device-width: 896px) and (-webkit-device-pixel-ratio: 2) {
-    /* Gaya khusus untuk iPhone XR */
-    body {
-        font-size: 16px; /* Sesuaikan ukuran font global */
-    }
-
-    .campaign-info h3 {
-        font-size: 1.1rem; /* Sesuaikan ukuran font judul */
-    }
-
-    .campaign-info p {
-        font-size: 0.9rem; /* Sesuaikan ukuran font teks */
-    }
-
-    .donasi-btn {
-        font-size: 0.9rem; /* Sesuaikan ukuran tombol donasi */
-    }
-}
+  }
+  
+  .card.campaign {
+    margin-bottom: 20px;
+    border: none; /* Menghilangkan border default */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Menambahkan bayangan */
+    transition: transform 0.3s ease;
+  }
+  
+  .card.campaign:hover {
+    transform: translateY(-5px); /* Efek hover pada card */
+  }
+  
+  .card-img-top {
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    height: 200px; /* Sesuaikan tinggi gambar */
+    object-fit: cover; /* Memastikan gambar memenuhi area dengan proporsi yang baik */
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .progress {
+    background-color: #e9ecef;
+    border-radius: 0.25rem;
+    height: 10px;
+    margin-top: 10px;
+  }
+  
+  .progress-bar {
+    background-color: #007bff;
+    transition: width 0.6s ease;
+  }
+  
+  .amount-collected {
+    font-size: 0.9rem;
+    color: #333;
+    margin-top: 10px;
+  }
+  
+  .amount-blue {
+    color: #007bff;
+    font-weight: bold;
+  }
+  
+  .no-campaigns-message {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #555;
+    margin-top: 20px;
+  }
+  

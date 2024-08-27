@@ -79,9 +79,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 break;
             case 'QRIS':
                 bankInfoHtml = `
-                    <img src="../public/assets/img/qris/qris.PNG" alt="QRIS Logo" class="bank-logo">
-                    QRIS (QRCode)
+                    <div class="qris-container text-center">
+                <img src="../assets/img/qris/qris.PNG" alt="QRIS Logo" class="qris-image" style="margin-left: 60px;>
+                <p class="mt-3" style="text-alight:center;"><br></p>
+            </div>
                 `;
+                bankInfoClass = 'qris-center';
                 break;
             default:
                 bankInfoHtml = 'Metode pembayaran tidak valid.';

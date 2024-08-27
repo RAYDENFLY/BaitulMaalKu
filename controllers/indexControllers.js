@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const nodemailer = require('nodemailer');
-const bodyParser = require('body-parser');
+const db = require('../database'); // Pastikan Anda menghubungkan database Anda
 
 const projectsPath = path.join(__dirname, '../json/dokumentasi.json');
 
@@ -53,41 +53,53 @@ function generateCategoryData(folderPath, category) {
 }
 
 function capitalizeFirstLetter(word) {
-    // Membagi kata menjadi array kata
     const words = word.split(' ');
-    // Mengubah huruf pertama setiap kata menjadi besar
     const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
-    // Menggabungkan kembali kata-kata menjadi satu string
     return capitalizedWords.join(' ');
 }
 
 exports.getIndex = (req, res) => {
     try {
         const dokumentasi = require('../json/dokumentasi.json');
-        const campaignsPath = path.join(__dirname, '../json/campaigns.json');
 
         const categories = ['Pintara', 'Akademi-CIMB', 'QurbanKu', 'Akademi-MNK']; // Ganti dengan kategori yang diinginkan
         const imageData = generateImageData(categories);
-        const campaigns = readJSONFile(campaignsPath);
 
-        // Tampilkan hasil
-        console.log('Image Data:', JSON.stringify(imageData, null, 2));
+        // Fungsi untuk memformat mata uang
+        function formatCurrency(amount) {
+            return `Rp. ${parseInt(amount).toLocaleString('id-ID')}`;
+        }
+        // Ambil data campaigns dari database
+        db.all('SELECT * FROM campaigns', (err, campaigns) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ message: 'Gagal mengambil data kampanye.' });
+            }
 
-        res.render('index', { imageData, dokumentasi, campaigns });
+            // Format mata uang untuk setiap campaign
+            campaigns.forEach(campaign => {
+                campaign.amountCollected = formatCurrency(campaign.amountCollected);
+                campaign.goalAmount = formatCurrency(campaign.goalAmount);
+            });
+
+            // Tampilkan hasil
+            res.render('index', { imageData, dokumentasi, campaigns });
+        });
+
     } catch (error) {
         console.error('Error di getIndex:', error);
         res.status(500).send('Terjadi kesalahan di server.');
     }
 };
 
+
 exports.getDokumentasi = (req, res) => {
     try {
-        const dokumentasi = require('../json/dokumentasi.json');
-
-        const categories = ['Pintara', 'Akademi-CIMB', 'QurbanKu', 'Akademi-MNK']; // Ganti dengan kategori yang diinginkan
+        const dokumentasi = readJSONFile(path.join(__dirname, '../json/dokumentasi.json'));
+        const categories = ['Pintara', 'Akademi-CIMB', 'QurbanKu', 'Akademi-MNK'];
         const imageData = generateImageData(categories);
 
-        // Tampilkan hasil
+        // Tampilkan hasil di console (untuk debugging)
         console.log('Image Data:', JSON.stringify(imageData, null, 2));
         res.render('homePage/dokumentasi', { imageData, dokumentasi });
     } catch (error) {
@@ -97,9 +109,34 @@ exports.getDokumentasi = (req, res) => {
 };
 
 exports.getMitraKami = (req, res) => {
-    res.render('homePage/mitra-kami');
+    try {
+        res.render('homePage/mitra-kami');
+    } catch (error) {
+        console.error('Error di getMitraKami:', error);
+        res.status(500).send('Terjadi kesalahan di server.');
+    }
 };
 
 exports.getTataKelola = (req, res) => {
-    res.render('homePage/tataKelola');
+    try {
+        res.render('homePage/tataKelola');
+    } catch (error) {
+        console.error('Error di getTataKelola:', error);
+        res.status(500).send('Terjadi kesalahan di server.');
+    }
+};
+
+exports.saveInvoiceLog = (req, res) => {
+    const { programName, donationAmount, uniqueCode, totalWithCode, userId } = req.body;
+
+    db.run(`INSERT INTO invoice_logs (user_id, program_name, donation_amount, unique_code, total_with_code) VALUES (?, ?, ?, ?, ?)`,
+        [userId, programName, donationAmount, uniqueCode, totalWithCode],
+        function(err) {
+            if (err) {
+                console.error('Error saving invoice log:', err);
+                return res.status(500).json({ message: 'Gagal menyimpan log invoice.' });
+            }
+            res.status(200).json({ message: 'Log invoice berhasil disimpan.' });
+        }
+    );
 };
