@@ -48,7 +48,7 @@
     <div class="container text-center text-md-left" data-aos="fade-up">
       <h1>BaitulMaalKu</h1>
       <h2>Aku untuk umat</h2>
-      <a href="#about" class="btn-get-started scrollto">Yuk Donasi !</a>
+      <a href="#campaign" class="btn-get-started scrollto">Yuk Donasi !</a>
     </div>
   </section><!-- End Hero -->
 
@@ -288,7 +288,7 @@
           <div class="col-lg-4 col-6">
             <div class="count-box">
               <i class="bi bi-journal-richtext"></i>
-              <span data-purecounter-start="0" data-purecounter-end="6" data-purecounter-duration="1" class="purecounter"></span>
+              <span data-purecounter-start="0" data-purecounter-end="8" data-purecounter-duration="1" class="purecounter"></span>
               <p>Program</p>
             </div>
           </div>
@@ -363,11 +363,13 @@
           %>
         </div>
         
-        <div class="row">
-          <div class="col-lg-12">
-            <a href="/dokumentasi"class="text-center"type="submit"><button>Lihat Semua Dokumentasi</button></a>
+        <div class="row justify-content-center">
+          <div class="col-lg-12 text-center">
+            <a href="/dokumentasi" class="text-center">
+              <button>Lihat Semua Dokumentasi</button>
+            </a>
           </div>
-        </div>
+        </div>        
         </div>
         </section>
         
@@ -591,68 +593,69 @@
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-<!-- The Modal -->
-<div class="modal fade" id="donasiModal" tabindex="-1" aria-labelledby="donasiModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="donasiModalLabel">Formulir Donasi</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!-- Nominal Sedekah -->
-        <div>
-          <h4>Pilih Nominal Sedekah</h4>
-          <button class="btn btn-outline-primary nominal-option" data-value="50000">Rp 50.000</button>
-          <button class="btn btn-outline-primary nominal-option" data-value="100000">Rp 100.000</button>
-          <button class="btn btn-outline-primary nominal-option" data-value="500000">Rp 500.000</button>
-          <button class="btn btn-outline-primary nominal-option" data-value="1000000">Rp 1.000.000</button>
+  <!-- The Modal -->
+  <div class="modal fade" id="donasiModal" tabindex="-1" aria-labelledby="donasiModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="donasiModalLabel">Formulir Donasi</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div class="modal-body">
+          <!-- Nominal Sedekah -->
+          <div>
+            <h4>Pilih Nominal Sedekah</h4>
+            <button class="btn btn-outline-primary nominal-option mb-2" data-value="50000">Rp 50.000</button>
+            <button class="btn btn-outline-primary nominal-option mb-2" data-value="100000">Rp 100.000</button>
+            <button class="btn btn-outline-primary nominal-option mb-2" data-value="500000">Rp 500.000</button>
+            <button class="btn btn-outline-primary nominal-option mb-2" data-value="1000000">Rp 1.000.000</button>
+            <button class="btn btn-outline-primary nominal-option mb-2" data-value="2000000">Rp 2.000.000</button>
+          </div>
 
-        <!-- Custom Nominal -->
-        <div class="form-group mt-3">
-          <label for="customNominal">Nominal Custom:</label>
-          <div class="input-group">
-            <span class="input-group-text">Rp</span>
-            <input type="number" class="form-control" id="customNominal" placeholder="Masukkan nominal">
+          <!-- Custom Nominal -->
+          <div class="form-group mt-3">
+            <label for="customNominal">Nominal Custom:</label>
+            <div class="input-group">
+              <span class="input-group-text">Rp</span>
+              <input type="number" class="form-control" id="customNominal" placeholder="Masukkan nominal">
+            </div>
+          </div>
+
+          <!-- Metode Pembayaran -->
+          <div class="form-group mt-3">
+            <label for="paymentMethod">Pilih Metode Pembayaran</label>
+            <select class="form-control" id="paymentMethod">
+              <option value="BSI">BSI</option>
+              <option value="CIMB">CIMB</option>
+              <option value="QRIS">QRIS</option>
+            </select>
+          </div>
+
+          <!-- Data Diri -->
+          <div class="form-group mt-3">
+            <label for="fullName">Nama Lengkap:</label>
+            <input type="text" class="form-control" id="fullName" placeholder="Nama Lengkap" required>
+          </div>
+          <div class="form-group">
+            <label for="phoneNumber">No WhatsApp:</label>
+            <input type="text" class="form-control" id="phoneNumber" placeholder="No WhatsApp" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" class="form-control" id="email" placeholder="Your Email">
+          </div>             
+          <div class="form-group">
+            <label for="message">Pesan dan Doa (opsional):</label>
+            <textarea class="form-control" id="message" rows="3" placeholder="Tulis pesan atau doa"></textarea>
           </div>
         </div>
-
-        <!-- Metode Pembayaran -->
-        <div class="form-group mt-3">
-          <label for="paymentMethod">Pilih Metode Pembayaran</label>
-          <select class="form-control" id="paymentMethod">
-            <option value="BSI">BSI</option>
-            <option value="CIMB">CIMB</option>
-            <option value="QRIS">QRIS</option>
-          </select>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+          <button type="button" id="submitDonation" class="btn btn-primary">Kirim Donasi</button>
         </div>
-
-        <!-- Data Diri -->
-        <div class="form-group mt-3">
-          <label for="fullName">Nama Lengkap:</label>
-          <input type="text" class="form-control" id="fullName" placeholder="Nama Lengkap" required>
-      </div>
-      <div class="form-group">
-          <label for="phoneNumber">No WhatsApp:</label>
-          <input type="text" class="form-control" id="phoneNumber" placeholder="No WhatsApp" required>
-      </div>
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="text" class="form-control" id="email" placeholder="Your Email">
-      </div>             
-      <div class="form-group">
-          <label for="message">Pesan dan Doa (opsional):</label>
-          <textarea class="form-control" id="message" rows="3" placeholder="Tulis pesan atau doa"></textarea>
-      </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-        <button type="button" id="submitDonation" class="btn btn-primary">Kirim Donasi</button>
       </div>
     </div>
   </div>
-</div>
 
 <!-- Modal Invoice -->
 <div class="modal fade" id="invoiceModal" tabindex="-1" aria-labelledby="invoiceModalLabel" aria-hidden="true">
@@ -669,8 +672,7 @@
       <div class="modal-body">
         <!-- Pesan Terima Kasih -->
         <div class="text-center mb-3">
-          <h5>Terima kasih atas donasi Anda!</h5>
-          <p class="text-muted">Berikut adalah detail donasi Anda:</p>
+          <h5>Berikut adalah detail donasi Anda:</h5>
         </div>
         
         <!-- Detail Donasi -->
@@ -784,6 +786,75 @@ document.getElementById('whatsappButton').addEventListener('click', function() {
 
 </script>
 
+<script>
+
+document.getElementById('submitDonation').addEventListener('click', function () {
+  const name = document.getElementById('fullName').value;
+  const phone = document.getElementById('phoneNumber').value;
+  const message = document.getElementById('message').value;
+  const paymentMethod = document.getElementById('paymentMethod').value;
+
+  // Validate fields
+  if (!name || !phone) {
+    alert('Nama dan Nomor WhatsApp harus diisi.');
+    return;
+  }
+
+  $('#invoiceModal').one('shown.bs.modal', function () {
+    // Retrieve the total amount and campaign title from the invoice modal
+    const totalWithCodeText = document.getElementById('totalWithCode').textContent.trim();
+    const campaignTitle = document.getElementById('programName').textContent.trim(); // Program name from invoice
+
+    // Clean and parse the amount
+    const cleanedText = totalWithCodeText
+      .replace('Rp', '')
+      .replace(/\./g, '')
+      .replace(',', '.')
+      .trim();
+
+    const amount = parseFloat(cleanedText);
+
+    console.log('Parsed Amount:', amount);
+    console.log('Campaign Title:', campaignTitle);
+
+    if (isNaN(amount) || amount <= 0) {
+      alert('Silakan masukkan jumlah donasi yang valid.');
+      return;
+    }
+
+    // Send donation data to the server
+    fetch('/donations', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        amount: amount,
+        name: name,
+        phone: phone,
+        message: message,
+        paymentMethod: paymentMethod,
+        campaign_title: campaignTitle, // Ensure campaign title is included
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          console.log('Donasi berhasil.');
+        } else {
+          alert('Terjadi kesalahan: ' + data.message);
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        alert('Terjadi kesalahan.');
+      });
+  });
+
+  $('#invoiceModal').modal('show');
+});
+
+</script>
   <script>
     $(document).ready(function () {
       $('form.php-email-form').submit(function (e) {

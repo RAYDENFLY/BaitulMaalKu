@@ -140,3 +140,52 @@ exports.saveInvoiceLog = (req, res) => {
         }
     );
 };
+
+
+exports.handleDonations = (req, res) => {
+    const { amount, name, phone, message, paymentMethod, campaign_title } = req.body;
+
+    console.log('Received donation data:', { amount, name, phone, message, paymentMethod, campaign_title });
+
+    // Validasi input
+    if (!amount || !name || !phone || isNaN(amount) || amount <= 0) {
+        console.log('Validation failed:', { amount, name, phone });
+        return res.status(400).json({ success: false, message: 'Data tidak lengkap atau tidak valid.' });
+    }
+
+    // Ambil campaign_id berdasarkan campaign_title
+    db.get(`SELECT id FROM campaigns WHERE title = ?`, [campaign_title], (err, row) => {
+        if (err) {
+            console.error('Error fetching campaign ID:', err);
+            return res.status(500).json({ success: false, message: 'Gagal mengambil ID kampanye.' });
+        }
+
+        const campaign_id = row ? row.id : null;
+        const uniqueCode = Math.floor(100000 + Math.random() * 900000).toString();
+        const totalWithCode = parseFloat(amount) + 5000;
+
+        db.run(`
+            INSERT INTO donations (amount, name, phone, message, payment_method, campaign_id)
+            VALUES (?, ?, ?, ?, ?, ?)
+        `, [amount, name, phone, message, paymentMethod, campaign_id], function(err) {
+            if (err) {
+                console.error('Error inserting donation:', err);
+                return res.status(500).json({ success: false, message: 'Gagal menyimpan data.' });
+            }
+
+            console.log('Donation data inserted successfully.');
+            res.json({
+                success: true,
+                programName: campaign_title,
+                amount: amount,
+                uniqueCode: uniqueCode,
+                totalWithCode: totalWithCode,
+                bankInfo: '<div>Informasi Bank</div>',
+                whatsappNumber: '08123456789'
+            });
+        });
+    });
+};
+
+
+

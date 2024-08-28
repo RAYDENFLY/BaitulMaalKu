@@ -1,9 +1,18 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./models/campaign_system.db');
 
+// Function to handle errors
+const handleError = (err, message) => {
+  if (err) {
+    console.error(`${message}:`, err);
+  } else {
+    console.log(`${message} succeeded.`);
+  }
+};
+
 db.serialize(() => {
-  // (Opsional) Memeriksa tabel untuk memastikan struktur
-  db.all(`PRAGMA table_info(campaigns)`, (err, rows) => {
+  // Check existing tables for debugging (Optional)
+  db.all(`PRAGMA table_info(donations)`, (err, rows) => {
     if (err) {
       console.error(err);
     } else {
@@ -11,16 +20,25 @@ db.serialize(() => {
     }
   });
 
-  // Membuat tabel users jika belum ada
+  // Add payment_method column to donations table (if it doesn't exist)
+  db.run(`
+    ALTER TABLE donations ADD COLUMN payment_method TEXT;
+  `, (err) => handleError(err, 'Adding payment_method column to donations table'));
+
+  // Add campaign_title column to donations table (if it doesn't exist)
+  db.run(`
+    ALTER TABLE donations ADD COLUMN campaign_title TEXT;
+  `, (err) => handleError(err, 'Adding campaign_title column to donations table'));
+
+  // Create or verify other tables (existing code)
   db.run(`
     CREATE TABLE IF NOT EXISTS users (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       username TEXT UNIQUE NOT NULL,
       password TEXT NOT NULL
     )
-  `);
+  `, (err) => handleError(err, 'Creating or verifying users table'));
 
-  // Membuat tabel campaigns dengan kolom yang benar
   db.run(`
     CREATE TABLE IF NOT EXISTS campaigns (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -28,14 +46,13 @@ db.serialize(() => {
       description TEXT NOT NULL,
       imgSrc TEXT,
       progressPercentage INTEGER,
-      amountCollected TEXT,
-      goalAmount TEXT,
+      amountCollected INTEGER,
+      goalAmount INTEGER,
       created_by INTEGER,
       FOREIGN KEY(created_by) REFERENCES users(id)
     )
-  `);
+  `, (err) => handleError(err, 'Creating or verifying campaigns table'));
 
-  // Membuat tabel logs jika belum ada
   db.run(`
     CREATE TABLE IF NOT EXISTS logs (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -46,26 +63,23 @@ db.serialize(() => {
       FOREIGN KEY(campaign_id) REFERENCES campaigns(id),
       FOREIGN KEY(user_id) REFERENCES users(id)
     )
-  `);
-});
+  `, (err) => handleError(err, 'Creating or verifying logs table'));
 
-// SQL untuk membuat tabel logs
-const createLogsTable = `
-CREATE TABLE IF NOT EXISTS logs (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER NOT NULL,
-    action TEXT NOT NULL,
-    campaign_id INTEGER NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-`;
-
-db.run(createLogsTable, (err) => {
-  if (err) {
-      console.error('Error creating logs table:', err);
-  } else {
-      console.log('Logs table created or already exists.');
-  }
+  db.run(`
+    CREATE TABLE IF NOT EXISTS donations (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      phone TEXT NOT NULL,
+      email TEXT NOT NULL,
+      amount INTEGER NOT NULL,
+      payment_method TEXT,
+      message TEXT,
+      campaign_id INTEGER,
+      status TEXT DEFAULT 'pending',
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY(campaign_id) REFERENCES campaigns(id)
+    )
+  `, (err) => handleError(err, 'Creating or verifying donations table'));
 });
 
 module.exports = db;
