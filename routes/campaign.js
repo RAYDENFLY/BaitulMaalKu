@@ -32,5 +32,15 @@ router.get('/datacrm/download', isAuthenticated, campaignController.downloadDona
 // Rute untuk mengunduh Excel
 router.get('/datacrm/download/excel', isAuthenticated, campaignController.downloadDonationsExcel);
 
+// Menampilkan form donasi untuk kampanye tertentu
+router.get('/:id/donate', campaignController.showDonationForm);
+
+// Menyimpan data donasi dari form
+router.post('/:id/donate', campaignController.submitDonation);
+
+router.post('/deleteDonation', campaignController.deleteDonation);
+
+
+
 
 module.exports = router;

@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 break;
             case 'CIMB':
                 bankInfoHtml = `
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/CIMB_Bank.svg" alt="CIMB Logo" class="bank-logo">
+                    <img src="https://esqtraining.com/wp-content/uploads/2018/05/Logo-Bank-CIMB-Niaga-Syariah.png" alt="CIMB Logo" class="bank-logo">
                     7631-0876-8400 a.n. Baitulmaalku (CIMB)
                 `;
                 break;

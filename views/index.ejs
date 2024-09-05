@@ -120,7 +120,7 @@
                 <p class="amount-collected">
                   Terkumpul<br><span class="amount-blue"><%= campaign.amountCollected %></span> dari <span class="amount-blue"><%= campaign.goalAmount %></span>
                 </p>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#donasiModal" data-campaign="<%= campaign.title %>">Donasi</button>
+                <button href="/campaigns/<%= campaign.id %>/donate" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#donasiModal" data-campaign="<%= campaign.title %>">Donasi</button>
               </div>
             </div>
           </div>
@@ -296,7 +296,7 @@
           <div class="col-lg-3 col-6 mt-5 mt-lg-0">
             <div class="count-box">
               <i class="bi bi-headset"></i>
-              <span data-purecounter-start="0" data-purecounter-end="45000" data-purecounter-duration="1" class="purecounter"></span>
+              <span data-purecounter-start="0" data-purecounter-end="105303" data-purecounter-duration="1" class="purecounter"></span>
               <p>Penerima Manfaat</p>
             </div>
           </div>

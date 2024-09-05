@@ -1,0 +1,394 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="/assets/css/rekening.css" rel="stylesheet">
+    <link href="/assets/css/invoice.css" rel="stylesheet">
+    <style>
+        .maintenance-banner {
+    background-color: #ffeb3b; /* Warna kuning untuk perhatian */
+    color: #000; /* Warna teks hitam */
+    padding: 2px;
+    padding-top: 8px;
+    text-align: center;
+    border-radius: 10px;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin-bottom: 13px;
+}
+.maintenance-banner p {
+   font-size: 13px;
+}
+.maintenance-banner h1 {
+   font-size: 16px;
+   font-weight: bold;
+}
+    </style>
+</head>
+<body class="bg-gray-100 font-roboto">
+    <!-- Campaign Details Section -->
+    <div class="max-w-md mx-auto bg-white shadow-md rounded-lg overflow-hidden mt-6">
+        <div class="relative">
+            <img src="<%= campaign.imgSrc %>" alt="<%= campaign.title %>" class="w-full h-48 object-cover">
+        </div>
+        <div class="p-4">
+            <h2 class="text-xl font-bold text-center mb-2"><%= campaign.title %></h2>
+            <p id="campaignProgress" class="text-center text-gray-700 mb-4">
+                Rp. <%= campaign.amountCollected.toLocaleString('id-ID') %> terkumpul dari Rp. <%= campaign.goalAmount.toLocaleString('id-ID') %>
+            </p>
+            
+            <button class="w-full bg-green-500 text-white py-2 rounded" data-bs-toggle="modal" data-bs-target="#donasiModal">Donasi Sekarang!</button>
+        </div>
+    </div>
+
+    <!-- Penggalang Dana Section -->
+    <div class="max-w-md mx-auto bg-white shadow-md rounded-lg overflow-hidden mt-6 p-4">
+        <h3 class="text-lg font-bold mb-2">
+         Penggalang Dana
+        </h3>
+        <div class="flex items-center mb-1">
+         <img alt="LAZ BaitulMaalKu"class="w-12 h-12 rounded-full mr-4" height="100" src="/assets/img/logo.png" width="100" style="margin-bottom: 16px;"/ >
+         <div>
+          <p class="font-bold mb-1">
+           LAZ BaitulMaalKu
+          </p>
+          <p class="text-sm text-gray-600">
+           <i class="fas fa-check-circle text-blue-500">
+           </i>
+           Verified Organization
+          </p>
+         </div>
+        </div>
+       </div>
+
+<!-- Tabs Section -->
+<div class="max-w-md mx-auto bg-white shadow-md rounded-lg overflow-hidden mt-6 p-4">
+    <div class="flex border-b mb-4">
+        <!-- Tab Buttons -->
+        <button id="tabKeterangan" class="flex-1 py-2 text-center border-b-2 border-blue-500 font-semibold text-blue-500 focus:outline-none active">Keterangan</button>
+        <button id="tabKabar" class="flex-1 py-2 text-center border-b-2 border-transparent hover:border-blue-500 hover:text-blue-500">Kabar Terbaru</button>
+        <button id="tabDonatur" class="flex-1 py-2 text-center border-b-2 border-transparent hover:border-blue-500 hover:text-blue-500">Donatur</button>
+        </div>
+
+    <!-- Tab Content -->
+    <div id="contentKeterangan" class="tab-content">
+        <h4 class="font-bold text-xl mb-2">Keterangan Program</h4>
+        <p class="text-gray-600"><%= campaign.description %></p>
+    </div>
+    <div id="contentKabar" class="tab-content hidden">
+        <div id="maintenanceBanner" class="maintenance-banner">
+            <h1>Informasi</h1>
+            <p>Fitur ini sedang dalam pemeliharaan. Namun, fitur donasi masih dapat berjalan dengan normal.</p>
+        </div>
+        <h4 class="font-bold text-xl mb-2">Kabar Terbaru</h4>
+        <p class="text-gray-600"></p>
+    </div>
+    <div id="contentDonatur" class="tab-content hidden">
+
+     <!-- Donatur List -->
+     <div class="space-y-4">
+        <div id="maintenanceBanner" class="maintenance-banner">
+            <h1>Informasi</h1>
+            <p>Fitur ini sedang dalam pemeliharaan. Namun, fitur donasi masih dapat berjalan dengan normal.</p>
+        </div>
+        <div class="bg-gray-100 p-4 rounded-lg">
+         <h4 class="text-gray-800 font-semibold" style="font-size: 20px;">
+          Tidak ada donasi
+         </h4>
+         <p class="text-gray-600">
+
+         </p>
+         <p class="text-gray-600">
+          
+         </p>
+          <span class="text-gray-500 text-sm">
+          1 hari yang lalu
+         </span>
+        </div>
+       </div>
+</div>
+    <!-- Modal Donasi -->
+    <div class="modal fade" id="donasiModal" tabindex="-1" aria-labelledby="donasiModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="donasiModalLabel">Formulir Donasi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Nominal Sedekah -->
+                    <div>
+                        <h4>Pilih Nominal Sedekah</h4>
+                        <button class="btn btn-outline-primary nominal-option mb-2" data-value="50000">Rp 50.000</button>
+                        <button class="btn btn-outline-primary nominal-option mb-2" data-value="100000">Rp 100.000</button>
+                    </div>
+
+                    <!-- Custom Nominal -->
+                    <div class="form-group mt-3">
+                        <label for="customNominal">Nominal Custom:</label>
+                        <div class="input-group">
+                            <span class="input-group-text">Rp</span>
+                            <input type="number" class="form-control" id="customNominal" placeholder="Masukkan nominal">
+                        </div>
+                    </div>
+
+                    <!-- Metode Pembayaran -->
+                    <div class="form-group mt-3">
+                        <label for="paymentMethod">Pilih Metode Pembayaran</label>
+                        <select class="form-control" id="paymentMethod">
+                            <option value="BSI">BSI</option>
+                            <option value="CIMB">CIMB</option>
+                            <option value="QRIS">QRIS</option>
+                        </select>
+                    </div>
+
+                    <!-- Data Diri -->
+                    <div class="form-group mt-3">
+                        <label for="fullName">Nama Lengkap:</label>
+                        <input type="text" class="form-control" id="fullName" placeholder="Nama Lengkap" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber">No WhatsApp:</label>
+                        <input type="text" class="form-control" id="phoneNumber" placeholder="No WhatsApp" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="text" class="form-control" id="email" placeholder="Your Email">
+                    </div>             
+                    <div class="form-group">
+                        <label for="message">Pesan dan Doa (opsional):</label>
+                        <textarea class="form-control" id="message" rows="3" placeholder="Tulis pesan atau doa"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="button" id="submitDonation" class="btn btn-primary">Kirim Donasi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+ <!-- Modal Invoice -->
+<div class="modal fade" id="invoiceModal" tabindex="-1" aria-labelledby="invoiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        
+        <!-- Modal Header -->
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="invoiceModalLabel">Invoice Donasi</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <!-- Pesan Terima Kasih -->
+          <div class="text-center mb-3">
+            <h5>Berikut adalah detail donasi Anda:</h5>
+          </div>
+          
+          <!-- Detail Donasi -->
+          <div class="mb-3">
+            <h6>Program:</h6>
+            <p id="namaProgram" class="fw-bold"><%= campaign.title %></p>
+            <hr>
+          </div>
+          
+          <div class="mb-3">
+            <h6>Jumlah Donasi:</h6>
+            <p id="donationAmount" class="fw-bold"></p>
+          </div>
+          
+          <div class="mb-3">
+            <h6>Kode Unik:</h6>
+            <p id="uniqueCode" class="fw-bold"></p>
+          </div>
+          
+          <div class="mb-3">
+            <h6>Total Donasi (termasuk kode unik):</h6>
+            <p id="totalWithCode" class="fw-bold text-success"></p>
+            <hr>
+          </div>
+  
+          <!-- Catatan -->
+          <div class="mb-3 text-center">
+            <p class="text-danger"><strong>Note:</strong> Abaikan invoice ini jika sudah membayar.</p>
+          </div>
+          
+          <!-- Informasi Pembayaran -->
+          <div class="mb-3">
+            <h6 style="text-align: center;">Informasi Pembayaran:</h6>
+            <div id="bankInfo" class="d-flex align-items-center" style="margin-left: 44px;">
+              <!-- Ikon bank dan informasi akan muncul di sini -->
+            </div>
+          </div>
+  
+          <!-- Tombol Konfirmasi Donasi via WhatsApp -->
+          <div class="text-center mb-3">
+            <a id="whatsappButton" class="btn btn-success d-flex align-items-center justify-content-center" target="_blank">
+              <i class="fab fa-whatsapp me-2"></i> Konfirmasi Donasi
+            </a>
+          </div>
+  
+        </div>
+        
+        <!-- Modal Footer -->
+        <div class="modal-footer bg-light">
+          <button type="button" id="closeInvoice" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
+
+
+    <!-- JavaScript for Tabs -->
+<script>
+    document.querySelectorAll('[id^="tab"]').forEach(button => {
+        button.addEventListener('click', () => {
+            const id = button.id.replace('tab', 'content');
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.querySelector(`#${id}`).classList.remove('hidden');
+            
+            document.querySelectorAll('.border-b-2').forEach(tab => {
+                tab.classList.remove('border-blue-500', 'text-blue-500');
+                tab.classList.add('border-transparent', 'hover:border-blue-500', 'hover:text-blue-500');
+            });
+            button.classList.remove('border-transparent', 'hover:border-blue-500', 'hover:text-blue-500');
+            button.classList.add('border-blue-500', 'text-blue-500');
+        });
+    });
+</script>
+<script>
+    // Refresh halaman ketika modal ditutup
+  document.getElementById('invoiceModal').addEventListener('hidden.bs.modal', function () {
+      location.reload();
+  });
+  
+  // Mengisi link WhatsApp dengan detail donasi
+  document.getElementById('whatsappButton').addEventListener('click', function() {
+      const programName = document.getElementById('programName').innerText;
+      const donationAmount = document.getElementById('donationAmount').innerText;
+      const uniqueCode = document.getElementById('uniqueCode').innerText;
+      const totalWithCode = document.getElementById('totalWithCode').innerText;
+  
+      const message = `Halo, saya ingin konfirmasi donasi untuk program ${programName} dengan jumlah ${totalWithCode} (termasuk kode unik ${uniqueCode}). Terima kasih.`;
+      
+      const whatsappLink = `https://wa.me/08111600660?text=${encodeURIComponent(message)}`;
+      document.getElementById('whatsappButton').setAttribute('href', whatsappLink);
+  });
+  
+  </script>
+
+  <script>
+    console.log('Amount Collected:', <%= JSON.stringify(campaign.amountCollected) %>);
+    console.log('Goal Amount:', <%= JSON.stringify(campaign.goalAmount) %>);
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const campaignProgress = document.querySelector('#campaignProgress');
+        if (campaignProgress) {
+            const amountCollected = parseFloat('<%= campaign.amountCollected %>');
+            const goalAmount = parseFloat('<%= campaign.goalAmount %>');
+            
+            campaignProgress.innerHTML = `Rp. ${amountCollected.toLocaleString('id-ID')} terkumpul dari Rp. ${goalAmount.toLocaleString('id-ID')}`;
+        } else {
+            console.error('Elemen dengan ID campaignProgress tidak ditemukan.');
+        }
+    });
+</script>
+
+
+
+
+  <script>
+  
+  document.getElementById('submitDonation').addEventListener('click', function () {
+    const name = document.getElementById('fullName').value;
+    const phone = document.getElementById('phoneNumber').value;
+    const message = document.getElementById('message').value;
+    const paymentMethod = document.getElementById('paymentMethod').value;
+    
+  
+    // Validate fields
+    if (!name || !phone) {
+      alert('Nama dan Nomor WhatsApp harus diisi.');
+      return;
+    }
+  
+    $('#invoiceModal').one('shown.bs.modal', function () {
+      // Retrieve the total amount and campaign title from the invoice modal
+      const totalWithCodeText = document.getElementById('totalWithCode').textContent.trim();
+      const campaignTitle = document.getElementById('namaProgram').textContent.trim(); // Program name from invoice
+  
+      // Clean and parse the amount
+      const cleanedText = totalWithCodeText
+  .replace('Rp. ', '')
+  .replace(/\./g, '')
+  .replace(',', '.')
+  .trim();
+
+  
+      const amount = parseFloat(cleanedText);
+  
+      console.log('Parsed Amount:', amount);
+      console.log('Campaign Title:', campaignTitle);
+  
+      if (isNaN(amount) || amount <= 0) {
+        alert('Silakan masukkan jumlah donasi yang valid.');
+        return;
+      }
+  
+      // Send donation data to the server
+      fetch('/donations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: amount,
+          name: name,
+          phone: phone,
+          message: message,
+          paymentMethod: paymentMethod,
+          campaign_title: campaignTitle, // Ensure campaign title is included
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            console.log('Donasi berhasil.');
+          } else {
+            alert('Terjadi kesalahan: ' + data.message);
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+          alert('Terjadi kesalahan.');
+        });
+    });
+  
+    $('#invoiceModal').modal('show');
+  });
+  
+  </script>
+
+
+    <!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="/assets/js/donasi.js"></script>
+</body>
+</html>
+ 

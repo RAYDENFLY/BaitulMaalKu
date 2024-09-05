@@ -265,3 +265,67 @@ exports.downloadDonationsExcel = (req, res) => {
         }
     });
 };
+
+// Menampilkan form donasi untuk kampanye tertentu
+exports.showDonationForm = (req, res) => {
+    const campaignId = req.params.id;
+
+    db.get('SELECT * FROM campaigns WHERE id = ?', [campaignId], (err, campaign) => {
+        if (err) {
+            console.error('Error retrieving campaign:', err);
+            return res.status(500).json({ message: 'Gagal mengambil data kampanye.' });
+        }
+
+        if (!campaign) {
+            return res.status(404).json({ message: 'Kampanye tidak ditemukan.' });
+        }
+
+        // Render form donasi dengan data kampanye
+        res.render('donationForm', { campaign });
+    });
+};
+
+
+// Menyimpan data donasi dari form
+exports.submitDonation = (req, res) => {
+    const { name, phone, email, amount, message, campaign_id } = req.body;
+
+    if (!name || !phone || !amount || !campaign_id) {
+        return res.status(400).send('Semua kolom wajib diisi.');
+    }
+
+    db.run(
+        `INSERT INTO donations (name, phone, email, amount, message, status, campaign_id) 
+         VALUES (?, ?, ?, ?, ?, 'pending', ?)`,
+        [name, phone, email, amount, message, campaign_id],
+        function(err) {
+            if (err) {
+                console.error('Error submitting donation:', err);
+                return res.status(500).json({ message: 'Gagal mengirim donasi.' });
+            }
+            res.redirect(`/campaigns/${campaign_id}/donate`);
+        }
+    );
+};
+
+// Menghapus donasi
+exports.deleteDonation = (req, res) => {
+    const { id } = req.body;
+
+    if (!id) {
+        return res.status(400).send('Invalid data');
+    }
+
+    db.run(
+        `DELETE FROM donations WHERE id = ?`,
+        [id],
+        function(err) {
+            if (err) {
+                console.error('Error deleting donation:', err);
+                return res.status(500).send('Error deleting donation');
+            }
+            res.redirect('/campaigns/datacrm'); // Redirect to CRM data page after deletion
+        }
+    );
+};
+
