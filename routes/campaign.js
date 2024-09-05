@@ -35,10 +35,11 @@ router.get('/datacrm/download/excel', isAuthenticated, campaignController.downlo
 // Menampilkan form donasi untuk kampanye tertentu
 router.get('/:id/donate', campaignController.showDonationForm);
 
+router.get('/download-database',isAuthenticated, campaignController.downloadDatabase);
 // Menyimpan data donasi dari form
 router.post('/:id/donate', campaignController.submitDonation);
 
-router.post('/deleteDonation', campaignController.deleteDonation);
+router.post('/deleteDonation', isAuthenticated, campaignController.deleteDonation);
 
 
 

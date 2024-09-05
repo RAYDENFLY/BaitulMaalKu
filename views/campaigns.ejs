@@ -88,6 +88,7 @@
             <a href="/campaigns/datacrm" class="btn btn-info mt-4">
                 <i class="fas fa-database"></i> Masuk ke Data CRM
             </a>
+            <a href="/download-database" class="btn btn-primary">Download Database</a>
         </div>
     </header>
 
@@ -100,6 +101,7 @@
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold"><%= campaign.title %></h5>
                         <p class="card-text"><i class="fas fa-chart-line"></i> Progress: <%= campaign.progressPercentage %>%</p>
+                        <p>Campaign ID: <%= campaign.id %></p>
                         <p class="card-text"><i class="fas fa-donate"></i> Collected: <%= campaign.amountCollected %></p>
                         <p class="card-text"><i class="fas fa-bullseye"></i> Goal: <%= campaign.goalAmount %></p>
                         <button class="btn btn-info mb-2" onclick="copyDonationLink('<%= campaign.id %>')">Salin Link Donasi</button>
@@ -229,7 +231,13 @@
       </script>
 
 <script>
-    function copyDonationLink(campaignId) {
+function copyDonationLink(campaignId) {
+    // Ensure campaignId is not empty or undefined
+    if (!campaignId) {
+        alert('Campaign ID is missing.');
+        return;
+    }
+
     // Generate the local link
     const donationLink = `http://baitulmaalku.com/campaigns/${campaignId}/donate`;
 
@@ -244,6 +252,7 @@
     // Alert user that the link has been copied
     alert('Link donasi telah disalin ke clipboard!');
 }
+
 </script>
 
     <!-- Bootstrap JS and dependencies -->

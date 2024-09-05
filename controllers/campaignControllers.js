@@ -128,9 +128,11 @@ exports.deleteCampaign = (req, res) => {
     const { id } = req.body;
     const userId = req.session.user.id;
 
+    console.log('Attempting to delete campaign with ID:', id); // Debugging
+
     db.run(`DELETE FROM campaigns WHERE id = ?`, [id], function(err) {
         if (err) {
-            console.error(err);
+            console.error('Error deleting campaign:', err);
             return res.status(500).json({ message: 'Gagal menghapus kampanye.' });
         }
 
@@ -148,6 +150,7 @@ exports.deleteCampaign = (req, res) => {
         res.redirect('/campaigns');
     });
 };
+
 
 // Mengupdate donasi yang dikonfirmasi
 exports.updateCollected = (req, res) => {
@@ -329,3 +332,14 @@ exports.deleteDonation = (req, res) => {
     );
 };
 
+exports.downloadDatabase = (req, res) => {
+
+    const filePath = 'models/campaign_system.db';  // Path ke file database
+    
+    res.download(filePath, 'campaign_system.db', (err) => {
+        if (err) {
+            console.error('Error downloading database file:', err);
+            res.status(500).json({ message: 'Gagal mengunduh file.' });
+        }
+    });
+};
