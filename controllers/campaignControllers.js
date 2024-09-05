@@ -332,14 +332,16 @@ exports.deleteDonation = (req, res) => {
     );
 };
 
-exports.downloadDatabase = (req, res) => {
-
+// Route untuk mengunduh database
+router.get('/download-database', isAuthenticated, (req, res) => {
     const filePath = 'models/campaign_system.db';  // Path ke file database
-    
+
     res.download(filePath, 'campaign_system.db', (err) => {
         if (err) {
             console.error('Error downloading database file:', err);
             res.status(500).json({ message: 'Gagal mengunduh file.' });
         }
+        res.redirect('/campaigns');
     });
-};
+});
+

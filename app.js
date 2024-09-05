@@ -89,7 +89,7 @@ app.use('/auth', authRoutes);
 
 
 // Apply Authentication Middleware to Campaign Routes
-app.use('/campaigns', isAuthenticated, campaignRoutes);
+app.use('/campaigns', campaignRoutes);
 
 // Handle form submissions
 const emailLimiter = rateLimit({
