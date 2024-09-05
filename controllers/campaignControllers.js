@@ -361,7 +361,7 @@ exports.showCampaignPage = (req, res) => {
         const pageUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
         
         // Render template dengan URL
-        res.render('campaignPage', { 
+        res.render('donationForm', { 
             campaign,
             pageUrl
         });
