@@ -333,15 +333,38 @@ exports.deleteDonation = (req, res) => {
 };
 
 // Route untuk mengunduh database
-router.get('/download-database', isAuthenticated, (req, res) => {
-    const filePath = 'models/campaign_system.db';  // Path ke file database
+exports.downloadDatabase = (req, res) => {
+    const filePath = path.join(__dirname, '..', 'models', 'campaign_system.db');  // Path ke file database
 
     res.download(filePath, 'campaign_system.db', (err) => {
         if (err) {
             console.error('Error downloading database file:', err);
             res.status(500).json({ message: 'Gagal mengunduh file.' });
         }
-        res.redirect('/campaigns');
     });
-});
+};
+
+exports.showCampaignPage = (req, res) => {
+    const campaignId = req.params.id;
+    
+    db.get('SELECT * FROM campaigns WHERE id = ?', [campaignId], (err, campaign) => {
+        if (err) {
+            console.error('Error retrieving campaign:', err);
+            return res.status(500).json({ message: 'Gagal mengambil data kampanye.' });
+        }
+
+        if (!campaign) {
+            return res.status(404).json({ message: 'Kampanye tidak ditemukan.' });
+        }
+
+        // Menyertakan URL halaman dalam data
+        const pageUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
+        
+        // Render template dengan URL
+        res.render('campaignPage', { 
+            campaign,
+            pageUrl
+        });
+    });
+};
 
