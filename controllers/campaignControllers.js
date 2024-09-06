@@ -1,6 +1,8 @@
 const db = require('../database');
 const useragent = require('useragent');
 const ipinfo = require('ipinfo'); // Layanan untuk mendapatkan geolokasi dari IP
+const ws = require('../middlewares/webSocket'); // Import the WebSocket server
+const WebSocket = require('ws'); // Import WebSocket class (optional if needed)
 
 
 const { Parser } = require('json2csv');
@@ -214,7 +216,7 @@ exports.rejectDonation = (req, res) => {
 
 exports.getCRMData = (req, res) => {
     db.all(`
-        SELECT d.id, d.name, d.phone, d.email, d.amount, d.message, d.status, c.title AS campaign_title, d.created_at
+        SELECT d.id, d.name, d.phone, d.amount, d.message, d.status, c.title AS campaign_title, d.created_at
         FROM donations d
         LEFT JOIN campaigns c ON d.campaign_id = c.id
         ORDER BY d.created_at DESC
@@ -233,7 +235,7 @@ exports.getCRMData = (req, res) => {
 
 exports.downloadDonationsCSV = (req, res) => {
     db.all(`
-        SELECT d.id, d.name, d.phone, d.email, d.amount, d.message, d.status, c.title AS campaign_title, d.created_at
+        SELECT d.id, d.name, d.phone, d.amount, d.message, d.status, c.title AS campaign_title, d.created_at
         FROM donations d
         LEFT JOIN campaigns c ON d.campaign_id = c.id
         ORDER BY d.created_at DESC
@@ -243,7 +245,7 @@ exports.downloadDonationsCSV = (req, res) => {
             return res.status(500).json({ message: 'Gagal mengambil data.' });
         }
 
-        const fields = ['id', 'name', 'phone', 'email', 'amount', 'message', 'status', 'campaign_title', 'created_at'];
+        const fields = ['id', 'name', 'phone', 'amount', 'message', 'status', 'campaign_title', 'created_at'];
         const opts = { fields };
 
         try {
@@ -262,7 +264,7 @@ exports.downloadDonationsCSV = (req, res) => {
 
 exports.downloadDonationsExcel = (req, res) => {
     db.all(`
-        SELECT d.id, d.name, d.phone, d.email, d.amount, d.message, d.status, c.title AS campaign_title, d.created_at
+        SELECT d.id, d.name, d.phone, d.amount, d.message, d.status, c.title AS campaign_title, d.created_at
         FROM donations d
         LEFT JOIN campaigns c ON d.campaign_id = c.id
         ORDER BY d.created_at DESC
@@ -311,28 +313,29 @@ exports.showDonationForm = (req, res) => {
 
 // Menyimpan data donasi dari form
 exports.submitDonation = (req, res) => {
-    const { name, phone, email, amount, message, campaign_id } = req.body;
+    const { name, phone, amount, message, campaign_id } = req.body;
 
     if (!name || !phone || !amount || !campaign_id) {
         return res.status(400).send('Semua kolom wajib diisi.');
     }
 
+    // Simpan donasi ke dalam database
     db.run(
-        `INSERT INTO donations (name, phone, email, amount, message, status, campaign_id) 
+        `INSERT INTO donations (name, phone, amount, message, status, campaign_id) 
          VALUES (?, ?, ?, ?, ?, 'pending', ?)`,
-        [name, phone, email, amount, message, campaign_id],
+        [name, phone, amount, message, campaign_id],
         function(err) {
             if (err) {
                 console.error('Error submitting donation:', err);
                 return res.status(500).json({ message: 'Gagal mengirim donasi.' });
             }
 
-             // Broadcast the new donation
-             wss.clients.forEach(client => {
+            // Broadcast the new donation to all connected WebSocket clients
+            ws.clients.forEach(client => {
                 if (client.readyState === WebSocket.OPEN) {
                     client.send(JSON.stringify({
                         action: 'new_donation',
-                        donation: { name, phone, email, amount, message, campaign_id }
+                        donation: { name, phone, amount, message, campaign_id }
                     }));
                 }
             });
@@ -341,7 +344,6 @@ exports.submitDonation = (req, res) => {
         }
     );
 };
-
 // Menghapus donasi
 exports.deleteDonation = (req, res) => {
     const { id } = req.body;

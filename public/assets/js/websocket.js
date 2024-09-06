@@ -1,14 +1,17 @@
-    const socket = new WebSocket('ws://localhost:8080'); // URL WebSocket
+const socket = new WebSocket('ws://localhost:4000');
 
-    socket.onmessage = function(event) {
-        const data = JSON.parse(event.data);
-        if (data.action === 'new_donation') {
-            console.log('New donation received:', data.donation);
-            // Update your UI with new donation data
-        }
-    };
+socket.onopen = function(event) {
+    console.log('WebSocket is connected.');
+};
 
-    // Example of sending a message (if needed)
-    function sendMessage(message) {
-        socket.send(message);
+socket.onmessage = function(event) {
+    const data = JSON.parse(event.data);
+    if (data.action === 'new_donation') {
+        console.log('New donation:', data.donation);
+        // Perbarui UI atau lakukan aksi lain berdasarkan donasi baru
     }
+};
+
+socket.onclose = function(event) {
+    console.log('WebSocket is closed.');
+};

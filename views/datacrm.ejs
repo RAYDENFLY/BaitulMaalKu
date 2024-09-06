@@ -72,6 +72,11 @@
                                     <button type="submit" class="btn btn-danger btn-sm">Tolak</button>
                                 </form>
                             <% } %>
+                            <form action="/campaigns/deleteDonation" method="POST" style="display:inline;">
+                                <input type="hidden" name="id" value="<%= donation.id %>">
+                                <input type="hidden" name="redirectUrl" value="/campaigns/datacrm">
+                                <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                            </form>
                         </td>
                     </tr>
                 <% }); %>

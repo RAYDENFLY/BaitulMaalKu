@@ -70,7 +70,7 @@ db.serialize(() => {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
       phone TEXT NOT NULL,
-      email TEXT NOT NULL,
+      email TEXT,
       amount INTEGER NOT NULL,
       payment_method TEXT,
       message TEXT,

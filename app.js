@@ -7,10 +7,12 @@ const cors = require('cors');
 const path = require('path');
 const midtransClient = require('midtrans-client');
 const multer = require('multer');
+const http = require('http');
 
+// Initialize dotenv for environment variables
 dotenv.config();
 
-const app = express();
+const app = express(); // Initialize the app here
 
 // Middleware
 app.use(cors());
@@ -87,7 +89,6 @@ app.use('/about', aboutRoutes);
 app.use('/go', gotoRoutes);
 app.use('/auth', authRoutes);
 
-
 // Apply Authentication Middleware to Campaign Routes
 app.use('/campaigns', campaignRoutes);
 
@@ -108,8 +109,23 @@ app.use((req, res) => {
     res.status(404).render('404', { message: 'Page Not Found' });
 });
 
+// Create HTTP server and WebSocket
+const server = http.createServer(app);
+
+// WebSocket middleware
+const wss = require('./middlewares/webSocket');
+
+// Attach WebSocket to the HTTP server
+server.on('upgrade', (request, socket, head) => {
+    wss.handleUpgrade(request, socket, head, ws => {
+        wss.emit('connection', ws, request);
+    });
+});
+
+
+
 // Server Listening
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
