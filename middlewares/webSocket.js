@@ -15,4 +15,21 @@ wss.on('connection', ws => {
     });
 });
 
+// Function to broadcast messages to all clients
+function broadcast(message) {
+    wsServer.clients.forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(message);
+        }
+    });
+}
+
+// Example: Notify clients of a new donation
+function notifyNewDonation(donation) {
+    broadcast(JSON.stringify({
+        action: 'new_donation',
+        donation: donation
+    }));
+}
+
 module.exports = wss;

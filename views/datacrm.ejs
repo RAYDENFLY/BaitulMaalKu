@@ -42,7 +42,7 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="donationTableBody">
                 <% donations.forEach(donation => { %>
                     <tr>
                         <td><%= new Date(donation.created_at).toLocaleDateString() %></td>
@@ -89,5 +89,70 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Open WebSocket connection
+        const socket = new WebSocket('ws://localhost:4000'); // Ganti dengan alamat WebSocket server
+    
+        socket.addEventListener('open', () => {
+            console.log('WebSocket connection established');
+        });
+    
+        // Listen for messages from the server
+        socket.addEventListener('message', function (event) {
+            console.log('Received message:', event.data);
+            const data = JSON.parse(event.data);
+    
+            if (data.action === 'new_donation') {
+                const donation = data.donation;
+                const tableBody = document.getElementById('donationTableBody');
+    
+                // Create a new row
+                const row = document.createElement('tr');
+                row.setAttribute('data-id', donation.id);
+    
+                row.innerHTML = `
+                    <td>${new Date(donation.created_at).toLocaleDateString()}</td>
+                    <td>${donation.name}</td>
+                    <td>${donation.phone}</td>
+                    <td>Rp ${parseFloat(donation.amount).toLocaleString('id-ID')}</td>
+                    <td>${donation.campaign_title || 'N/A'}</td>
+                    <td>
+                        ${donation.status === 'pending' ? '<span class="badge badge-warning">Pending</span>' : `<span class="badge ${donation.status === 'confirmed' ? 'badge-success' : 'badge-danger'}">${donation.status === 'confirmed' ? 'Confirmed' : 'Rejected'}</span>`}
+                    </td>
+                    <td>
+                        ${donation.status === 'pending' ? `
+                            <form action="/campaigns/confirmDonation" method="POST" style="display:inline;">
+                                <input type="hidden" name="id" value="${donation.id}">
+                                <input type="hidden" name="redirectUrl" value="/campaigns/datacrm">
+                                <button type="submit" class="btn btn-primary btn-sm">Konfirmasi</button>
+                            </form>
+                            <form action="/campaigns/rejectDonation" method="POST" style="display:inline;">
+                                <input type="hidden" name="id" value="${donation.id}">
+                                <input type="hidden" name="redirectUrl" value="/campaigns/datacrm">
+                                <button type="submit" class="btn btn-danger btn-sm">Tolak</button>
+                            </form>
+                        ` : ''}
+                        <form action="/campaigns/deleteDonation" method="POST" style="display:inline;">
+                            <input type="hidden" name="id" value="${donation.id}">
+                            <input type="hidden" name="redirectUrl" value="/campaigns/datacrm">
+                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                        </form>
+                    </td>
+                `;
+    
+                // Append the new row to the table
+                tableBody.appendChild(row);
+            }
+        });
+    
+        socket.addEventListener('error', (error) => {
+            console.log('WebSocket error:', error);
+        });
+    
+        socket.addEventListener('close', () => {
+            console.log('WebSocket connection closed');
+        });
+    </script>
+    
 </body>
 </html>
