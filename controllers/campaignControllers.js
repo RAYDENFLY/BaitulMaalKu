@@ -1,4 +1,7 @@
 const db = require('../database');
+const useragent = require('useragent');
+const ipinfo = require('ipinfo'); // Layanan untuk mendapatkan geolokasi dari IP
+
 
 const { Parser } = require('json2csv');
 const XLSX = require('xlsx');
@@ -10,41 +13,56 @@ function formatCurrency(amount) {
 
 // Menampilkan semua kampanye
 exports.getAllCampaigns = (req, res) => {
+    // Ambil semua data kampanye
     db.all('SELECT * FROM campaigns', (err, rows) => {
         if (err) {
-            console.error(err);  // Debugging
+            console.error('Error fetching campaigns:', err);
             return res.status(500).json({ message: 'Gagal mengambil data kampanye.' });
         }
 
-        // Format mata uang
+        // Format mata uang untuk setiap kampanye
         rows.forEach(campaign => {
             campaign.amountCollected = formatCurrency(campaign.amountCollected);
             campaign.goalAmount = formatCurrency(campaign.goalAmount);
         });
 
-        res.render('campaigns', { campaigns: rows });
+        // Ambil semua data logs
+        db.all('SELECT * FROM logs ORDER BY timestamp DESC', (err, logs) => {
+            if (err) {
+                console.error('Error fetching logs:', err);
+                return res.status(500).json({ message: 'Gagal mengambil data log.' });
+            }
+
+            // Render view campaigns dengan data kampanye dan logs
+            res.render('campaigns', { campaigns: rows, logs: logs });
+        });
     });
 };
 
+
 // Menampilkan dashboard dengan semua kampanye dan logs
 exports.showDashboard = (req, res) => {
+    // Ambil semua data kampanye
     db.all('SELECT * FROM campaigns', (err, campaigns) => {
         if (err) {
-            console.error(err);
+            console.error('Error fetching campaigns:', err);
             return res.status(500).json({ message: 'Gagal mengambil data kampanye.' });
         }
 
+        // Format mata uang untuk setiap kampanye
         campaigns.forEach(campaign => {
             campaign.amountCollected = formatCurrency(campaign.amountCollected);
             campaign.goalAmount = formatCurrency(campaign.goalAmount);
         });
 
-        db.all('SELECT * FROM logs ORDER BY created_at DESC', (err, logs) => {
+        // Ambil semua data logs
+        db.all('SELECT * FROM logs ORDER BY timestamp DESC', (err, logs) => {
             if (err) {
-                console.error(err);
+                console.error('Error fetching logs:', err);
                 return res.status(500).json({ message: 'Gagal mengambil data log.' });
             }
 
+            // Render view dashboard dengan data kampanye dan logs
             res.render('dashboard', {
                 campaigns: campaigns,
                 logs: logs
@@ -52,6 +70,8 @@ exports.showDashboard = (req, res) => {
         });
     });
 };
+
+
 
 // Menambahkan kampanye baru
 exports.addCampaign = (req, res) => {
@@ -306,6 +326,17 @@ exports.submitDonation = (req, res) => {
                 console.error('Error submitting donation:', err);
                 return res.status(500).json({ message: 'Gagal mengirim donasi.' });
             }
+
+             // Broadcast the new donation
+             wss.clients.forEach(client => {
+                if (client.readyState === WebSocket.OPEN) {
+                    client.send(JSON.stringify({
+                        action: 'new_donation',
+                        donation: { name, phone, email, amount, message, campaign_id }
+                    }));
+                }
+            });
+
             res.redirect(`/campaigns/${campaign_id}/donate`);
         }
     );
@@ -344,8 +375,46 @@ exports.downloadDatabase = (req, res) => {
     });
 };
 
+
+
 exports.showCampaignPage = (req, res) => {
     const campaignId = req.params.id;
+    // Mendapatkan User-Agent untuk informasi perangkat dan browser
+    const agent = useragent.parse(req.headers['user-agent']);
+     // Mendapatkan alamat IP pengguna
+     const ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
+     // Mengambil data geolokasi dari IP menggunakan IPInfo atau layanan lain
+    ipinfo(ipAddress, (err, cLoc) => {
+        if (err) {
+            console.error('Error getting geolocation:', err);
+        } else {
+            const location = cLoc ? `${cLoc.city}, ${cLoc.region}, ${cLoc.country}` : 'Unknown';
+
+            // Simpan informasi ke database atau log file
+            const logData = {
+                ip: ipAddress,
+                browser: agent.toString(), // Informasi tentang browser dan OS
+                location: location,
+                timestamp: new Date().toISOString(),
+                campaign_id: campaignId,
+            };
+
+            // Simpan log ke dalam tabel logs_access
+            db.run(
+                `INSERT INTO logs_access (ip, browser, location, timestamp, campaign_id) VALUES (?, ?, ?, ?, ?)`,
+                [logData.ip, logData.browser, logData.location, logData.timestamp, logData.campaign_id],
+                (logErr) => {
+                    if (logErr) {
+                        console.error('Error logging access:', logErr);
+                    }
+                }
+            );
+        }
+    }
+)
+
+
     
     db.get('SELECT * FROM campaigns WHERE id = ?', [campaignId], (err, campaign) => {
         if (err) {
@@ -363,7 +432,8 @@ exports.showCampaignPage = (req, res) => {
         // Render template dengan URL
         res.render('donationForm', { 
             campaign,
-            pageUrl
+            pageUrl,
+            logs: logs
         });
     });
 };
