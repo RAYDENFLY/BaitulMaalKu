@@ -74,6 +74,7 @@ const zisControllers = require('./controllers/gate/zisControllers');
 const gotoRoutes = require('./routes/goto/go');
 const campaignRoutes = require('./routes/campaign');
 const authRoutes = require('./routes/auth');
+const qrisRoutes = require('./routes/qris');
 const campaignController = require('./controllers/campaignControllers');
 
 // Middleware Authentication
@@ -88,6 +89,7 @@ app.use('/tatakelola', tataKelolaRoutes);
 app.use('/about', aboutRoutes);
 app.use('/go', gotoRoutes);
 app.use('/auth', authRoutes);
+app.use('/qris', qrisRoutes);
 
 // Apply Authentication Middleware to Campaign Routes
 app.use('/campaigns', campaignRoutes);
