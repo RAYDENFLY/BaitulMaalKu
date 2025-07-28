@@ -20,6 +20,9 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
+  <!-- FontAwesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -104,27 +107,206 @@
       <p>Mari berbagi kebahagiaan dengan mendukung program-program di bawah ini</p>
     </div>
     
-    <div id="campaignContainer" class="campaigns row">
-      <!-- Loading state -->
-      <div id="campaignLoading" class="text-center">
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
+    <!-- Horizontal scrollable campaign container -->
+    <div class="campaign-wrapper">
+      <div id="campaignContainer" class="campaigns-scroll d-flex">
+        <!-- Loading state -->
+        <div id="campaignLoading" class="text-center w-100">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p>Memuat program donasi...</p>
         </div>
-        <p>Memuat program donasi...</p>
+        
+        <!-- Error state -->
+        <div id="campaignError" class="text-center w-100" style="display: none;">
+          <p class="no-campaigns-message">Gagal memuat program donasi. Silakan coba lagi nanti.</p>
+        </div>
+        
+        <!-- No campaigns state -->
+        <div id="noCampaigns" class="text-center w-100" style="display: none;">
+          <p class="no-campaigns-message">Campaign saat ini belum tersedia</p>
+        </div>
       </div>
-      
-      <!-- Error state -->
-      <div id="campaignError" class="text-center" style="display: none;">
-        <p class="no-campaigns-message">Gagal memuat program donasi. Silakan coba lagi nanti.</p>
-      </div>
-      
-      <!-- No campaigns state -->
-      <div id="noCampaigns" class="text-center" style="display: none;">
-        <p class="no-campaigns-message">Campaign saat ini belum tersedia</p>
-      </div>
+    </div>
+    
+    <!-- Button to view more campaigns -->
+    <div class="text-center mt-4">
+      <a href="https://donasi.baitulmaalku.com/donasi" target="_blank" class="btn btn-primary btn-lg">
+        Lihat Campaign Lainnya
+      </a>
     </div>
   </div>
 </section>
+
+<!-- Add custom CSS for horizontal scrolling -->
+<style>
+.campaign-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.campaigns-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  gap: 15px; /* Reduced gap for better spacing with wider cards */
+  padding: 15px 15px 5px 15px; /* Reduced bottom padding from 20px to 5px */
+  scrollbar-width: thin;
+  scrollbar-color: #007bff #f1f1f1;
+  justify-content: center; /* Center campaigns when few items */
+}
+
+/* When there are few campaigns, center them */
+.campaigns-scroll.few-campaigns {
+  justify-content: center;
+  flex-wrap: nowrap;
+  padding: 15px 0 5px 0; /* Reduced bottom padding for centered campaigns */
+}
+
+.campaigns-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.campaigns-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.campaigns-scroll::-webkit-scrollbar-thumb {
+  background: #007bff;
+  border-radius: 10px;
+}
+
+.campaigns-scroll::-webkit-scrollbar-thumb:hover {
+  background: #0056b3;
+}
+
+.campaign-card-item {
+  flex: 0 0 320px; /* Increased width from 300px to 320px */
+  white-space: normal;
+  margin: 0 10px; /* Add margin for better spacing */
+}
+
+.campaign-card-item .card {
+  height: 100%;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
+  transition: all 0.3s ease;
+  border: none;
+  border-radius: 12px; /* Rounded corners */
+  overflow: hidden;
+}
+
+.campaign-card-item .card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.campaign-card-item .card-img-container {
+  position: relative;
+  overflow: hidden;
+  height: 150px; /* Increased from 120px to 150px for even less cropping */
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.campaign-card-item .card-img-top {
+  height: 150px; /* Increased from 120px to match container */
+  object-fit: cover;
+  object-position: center center; /* Center the image to show important parts */
+  width: 100%;
+  transition: transform 0.3s ease;
+  min-height: 100%;
+}
+
+.campaign-card-item .card:hover .card-img-top {
+  transform: scale(1.05);
+}
+
+.campaign-card-item .card-body {
+  padding: 15px; /* Reduced from 20px */
+  background: white;
+}
+
+.campaign-card-item .card-title {
+  font-size: 16px; /* Increased from 14px */
+  font-weight: 600;
+  height: 48px; /* Increased height */
+  overflow: hidden;
+  line-height: 1.3;
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.campaign-card-item .progress {
+  height: 8px; /* Increased from 6px */
+  background-color: #e9ecef;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.campaign-card-item .progress-bar {
+  background: linear-gradient(90deg, #007bff, #0056b3);
+  border-radius: 4px;
+}
+
+.campaign-card-item .amount-collected {
+  font-size: 13px; /* Increased from 12px */
+  margin-bottom: 15px;
+  color: #495057;
+}
+
+.campaign-card-item .amount-blue {
+  color: #007bff;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.campaign-card-item .btn {
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.campaign-card-item .btn:hover {
+  background: linear-gradient(135deg, #0056b3, #004085);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .campaign-card-item {
+    flex: 0 0 300px; /* Slightly wider on mobile */
+    margin: 0 8px;
+  }
+  
+  .campaigns-scroll {
+    padding: 10px 10px 5px 10px; /* Reduced padding on mobile */
+  }
+  
+  .campaign-card-item .card-img-container {
+    height: 130px; /* Increased from 110px for better visibility on mobile */
+  }
+  
+  .campaign-card-item .card-img-top {
+    height: 130px; /* Adjust image height on mobile */
+    object-position: center center; /* Ensure good centering on mobile */
+  }
+  
+  .campaign-card-item .card-body {
+    padding: 12px; /* Reduced padding on mobile */
+  }
+  
+  .campaign-card-item .card-title {
+    font-size: 15px;
+    height: 45px;
+  }
+}
+</style>
 
 <!-- Campaign Section JavaScript -->
 <script>
@@ -139,9 +321,9 @@ async function loadCampaigns() {
     const noCampaigns = document.getElementById('noCampaigns');
     
     try {
-        // Use the donasi.baitulmaalku.com API directly
+        // Use the donasi.baitulmaalku.com API directly - limit to 5 campaigns
         const apiUrl = 'https://donasi.baitulmaalku.com';
-        const response = await fetch(`${apiUrl}/api/campaigns/featured?limit=6&base_url=${apiUrl}`);
+        const response = await fetch(`${apiUrl}/api/campaigns/featured?limit=5&base_url=${apiUrl}`);
         
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -157,11 +339,13 @@ async function loadCampaigns() {
             displayCampaigns(data.data.featured_campaigns);
         } else {
             console.log('No campaigns found or empty response');
+            container.classList.add('few-campaigns'); // Center the no campaigns message
             noCampaigns.style.display = 'block';
         }
     } catch (err) {
         console.error('Error loading campaigns:', err);
         loading.style.display = 'none';
+        container.classList.add('few-campaigns'); // Center the error message
         error.style.display = 'block';
         
         // Show fallback message with more details
@@ -181,11 +365,18 @@ function displayCampaigns(campaigns) {
         const campaignCard = createCampaignCard(campaign);
         container.appendChild(campaignCard);
     });
+    
+    // Add class for centering when there are few campaigns
+    if (campaigns.length <= 2) {
+        container.classList.add('few-campaigns');
+    } else {
+        container.classList.remove('few-campaigns');
+    }
 }
 
 function createCampaignCard(campaign) {
     const cardDiv = document.createElement('div');
-    cardDiv.className = 'col-md-6 col-lg-4';
+    cardDiv.className = 'campaign-card-item';
     
     // Calculate progress percentage (if we have collected amount data)
     let progressPercentage = 0;
@@ -198,14 +389,15 @@ function createCampaignCard(campaign) {
     
     cardDiv.innerHTML = `
         <div class="card campaign">
-            <img src="${imageUrl}" 
-                 class="card-img-top" 
-                 alt="${campaign.title}"
-                 onerror="handleImageError(this)"
-                 style="height: 200px; object-fit: cover;">
+            <div class="card-img-container">
+                <img src="${imageUrl}" 
+                     class="card-img-top" 
+                     alt="${campaign.title}"
+                     onerror="handleImageError(this)">
+            </div>
             <div class="card-body">
-                <h5 class="card-title">${campaign.title}</h5>
-                <div class="progress">
+                <h6 class="card-title">${campaign.title}</h6>
+                <div class="progress mb-3">
                     <div class="progress-bar" 
                          role="progressbar" 
                          style="width: ${progressPercentage}%;" 
@@ -214,14 +406,13 @@ function createCampaignCard(campaign) {
                          aria-valuemax="100">
                     </div>
                 </div>
-                <p class="amount-collected">
-                    Target<br>
-                    <span class="amount-blue">${campaign.target_formatted}</span>
-                    ${campaign.collected_formatted ? `<br><small>Terkumpul: ${campaign.collected_formatted}</small>` : ''}
-                </p>
+                <div class="amount-collected">
+                    <div class="amount-blue">Target: ${campaign.target_formatted}</div>
+                    ${campaign.collected_formatted ? `<small class="text-success">Terkumpul: ${campaign.collected_formatted}</small>` : ''}
+                </div>
                 <button onclick="openDonationModal('${escapeHtml(campaign.title)}', '${campaign.donation_url}')" 
-                        class="btn btn-primary">
-                    Donasi
+                        class="btn btn-primary w-100">
+                    <i class="fas fa-heart me-2"></i>Donasi Sekarang
                 </button>
             </div>
         </div>
