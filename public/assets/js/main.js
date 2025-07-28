@@ -260,22 +260,36 @@
 
 })()
 
-const pintara2Image = document.getElementById('pintara2');
-    heic2any({
-      blob: projects[3].imageUrl,
-      toType: 'image/jpeg',
-      quality: 0.7
-    }).then(function (result) {
-      pintara2Image.src = URL.createObjectURL(result);
-    }).catch(function (error) {
-      console.error(error);
-    });
-
-    document.querySelectorAll('.close').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        const modal = bootstrap.Modal.getInstance(document.getElementById('donasiModal'));
-        modal.hide();
+// Safely handle image conversions only if needed elements exist
+document.addEventListener('DOMContentLoaded', function() {
+  const pintara2Image = document.getElementById('pintara2');
+  
+  // Only try to convert if the image element exists and heic2any is available
+  if (pintara2Image && typeof heic2any !== 'undefined' && typeof projects !== 'undefined' && projects[3]) {
+    try {
+      heic2any({
+        blob: projects[3].imageUrl,
+        toType: 'image/jpeg',
+        quality: 0.7
+      }).then(function (result) {
+        pintara2Image.src = URL.createObjectURL(result);
+      }).catch(function (error) {
+        console.error('HEIC conversion error:', error);
       });
+    } catch (error) {
+      console.error('HEIC conversion setup error:', error);
+    }
+  }
+
+  // Handle modal close buttons
+  document.querySelectorAll('.close').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      const modal = bootstrap.Modal.getInstance(document.getElementById('donasiModal'));
+      if (modal) {
+        modal.hide();
+      }
     });
+  });
+});
     
     

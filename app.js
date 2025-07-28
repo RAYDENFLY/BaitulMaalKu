@@ -77,6 +77,9 @@ const authRoutes = require('./routes/auth');
 const qrisRoutes = require('./routes/qris');
 const campaignController = require('./controllers/campaignControllers');
 
+// Import API Routes
+const apiCampaignsRoutes = require('./routes/api/campaigns');
+
 // Middleware Authentication
 const { isAuthenticated } = require('./middlewares/authMiddleware');
 
@@ -90,6 +93,9 @@ app.use('/about', aboutRoutes);
 app.use('/go', gotoRoutes);
 app.use('/auth', authRoutes);
 app.use('/qris', qrisRoutes);
+
+// API Routes
+app.use('/api/campaigns', apiCampaignsRoutes);
 
 // Apply Authentication Middleware to Campaign Routes
 app.use('/campaigns', campaignRoutes);

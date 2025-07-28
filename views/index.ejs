@@ -104,33 +104,159 @@
       <p>Mari berbagi kebahagiaan dengan mendukung program-program di bawah ini</p>
     </div>
     
-    <div class="campaigns row">
-      <% if (campaigns.length === 0) { %>
+    <div id="campaignContainer" class="campaigns row">
+      <!-- Loading state -->
+      <div id="campaignLoading" class="text-center">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p>Memuat program donasi...</p>
+      </div>
+      
+      <!-- Error state -->
+      <div id="campaignError" class="text-center" style="display: none;">
+        <p class="no-campaigns-message">Gagal memuat program donasi. Silakan coba lagi nanti.</p>
+      </div>
+      
+      <!-- No campaigns state -->
+      <div id="noCampaigns" class="text-center" style="display: none;">
         <p class="no-campaigns-message">Campaign saat ini belum tersedia</p>
-      <% } else { %>
-        <% campaigns.forEach(function(campaign) { %>
-          <div class="col-md-6 col-lg-4">
-            <div class="card campaign">
-              <img src="<%= campaign.imgSrc %>" class="card-img-top" alt="<%= campaign.title %>">
-              <div class="card-body">
-                <h5 class="card-title"><%= campaign.title %></h5>
-                <div class="progress">
-                  <div class="progress-bar" role="progressbar" style="width: <%= campaign.progressPercentage %>%;" aria-valuenow="<%= campaign.progressPercentage %>" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="amount-collected">
-                  Terkumpul<br><span class="amount-blue"><%= campaign.amountCollected %></span> dari <span class="amount-blue"><%= campaign.goalAmount %></span>
-                </p>
-                <button href="/campaigns/<%= campaign.id %>/donate" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#donasiModal" data-campaign="<%= campaign.title %>">Donasi</button>
-              </div>
-            </div>
-          </div>
-        <% }); %>
-      <% } %>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- Campaign Section JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    loadCampaigns();
+});
 
+async function loadCampaigns() {
+    const container = document.getElementById('campaignContainer');
+    const loading = document.getElementById('campaignLoading');
+    const error = document.getElementById('campaignError');
+    const noCampaigns = document.getElementById('noCampaigns');
+    
+    try {
+        // Use the donasi.baitulmaalku.com API directly
+        const apiUrl = 'https://donasi.baitulmaalku.com';
+        const response = await fetch(`${apiUrl}/api/campaigns/featured?limit=6&base_url=${apiUrl}`);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('Campaign API Response:', data);
+        
+        // Hide loading
+        loading.style.display = 'none';
+        
+        if (data.success && data.data.featured_campaigns && data.data.featured_campaigns.length > 0) {
+            displayCampaigns(data.data.featured_campaigns);
+        } else {
+            console.log('No campaigns found or empty response');
+            noCampaigns.style.display = 'block';
+        }
+    } catch (err) {
+        console.error('Error loading campaigns:', err);
+        loading.style.display = 'none';
+        error.style.display = 'block';
+        
+        // Show fallback message with more details
+        error.innerHTML = `
+            <p class="no-campaigns-message">Gagal memuat program donasi.</p>
+            <p><small>Error: ${err.message}</small></p>
+            <button onclick="loadCampaigns()" class="btn btn-sm btn-primary">Coba Lagi</button>
+        `;
+    }
+}
+
+function displayCampaigns(campaigns) {
+    const container = document.getElementById('campaignContainer');
+    container.innerHTML = '';
+    
+    campaigns.forEach(campaign => {
+        const campaignCard = createCampaignCard(campaign);
+        container.appendChild(campaignCard);
+    });
+}
+
+function createCampaignCard(campaign) {
+    const cardDiv = document.createElement('div');
+    cardDiv.className = 'col-md-6 col-lg-4';
+    
+    // Calculate progress percentage (if we have collected amount data)
+    let progressPercentage = 0;
+    if (campaign.collected && campaign.target) {
+        progressPercentage = Math.min((campaign.collected / campaign.target) * 100, 100);
+    }
+    
+    // Use the image URL from API response directly, with proper fallback
+    let imageUrl = campaign.image || 'assets/img/portfolio/portfolio-2.jpg';
+    
+    cardDiv.innerHTML = `
+        <div class="card campaign">
+            <img src="${imageUrl}" 
+                 class="card-img-top" 
+                 alt="${campaign.title}"
+                 onerror="handleImageError(this)"
+                 style="height: 200px; object-fit: cover;">
+            <div class="card-body">
+                <h5 class="card-title">${campaign.title}</h5>
+                <div class="progress">
+                    <div class="progress-bar" 
+                         role="progressbar" 
+                         style="width: ${progressPercentage}%;" 
+                         aria-valuenow="${progressPercentage}" 
+                         aria-valuemin="0" 
+                         aria-valuemax="100">
+                    </div>
+                </div>
+                <p class="amount-collected">
+                    Target<br>
+                    <span class="amount-blue">${campaign.target_formatted}</span>
+                    ${campaign.collected_formatted ? `<br><small>Terkumpul: ${campaign.collected_formatted}</small>` : ''}
+                </p>
+                <button onclick="openDonationModal('${escapeHtml(campaign.title)}', '${campaign.donation_url}')" 
+                        class="btn btn-primary">
+                    Donasi
+                </button>
+            </div>
+        </div>
+    `;
+    
+    return cardDiv;
+}
+
+// Handle image loading errors more gracefully
+function handleImageError(img) {
+    // Prevent infinite error loops
+    if (img.src.includes('portfolio-2.jpg')) {
+        img.style.display = 'none';
+        console.warn('Default fallback image also failed to load');
+        return;
+    }
+    
+    // Set fallback image
+    img.src = 'assets/img/portfolio/portfolio-2.jpg';
+    console.log('Switched to fallback image for campaign');
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function openDonationModal(campaignTitle, donationUrl) {
+    // Langsung redirect ke link campaign dari donasi.baitulmaalku.com
+    window.open(donationUrl, '_blank');
+}
+</script>
+
+<!--======= Services Section ======= -->
 
   <section id="services" class="services section-bg">
     <div class="container">

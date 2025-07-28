@@ -1,11 +1,12 @@
+require('dotenv').config();
 const db = require('./database');
 const bcrypt = require('bcrypt');
 
 // Daftar pengguna yang ingin ditambahkan
 const users = [
   {
-    username: 'markom.baitulmaalku',
-    password: 'bmku16762019'
+    username: process.env.DEFAULT_USERNAME,
+    password: process.env.DEFAULT_PASSWORD
   }
 ];
 

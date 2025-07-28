@@ -65,26 +65,8 @@ exports.getIndex = (req, res) => {
         const categories = ['Pintara', 'Akademi-CIMB', 'QurbanKu', 'Akademi-MNK']; // Ganti dengan kategori yang diinginkan
         const imageData = generateImageData(categories);
 
-        // Fungsi untuk memformat mata uang
-        function formatCurrency(amount) {
-            return `Rp. ${parseInt(amount).toLocaleString('id-ID')}`;
-        }
-        // Ambil data campaigns dari database
-        db.all('SELECT * FROM campaigns', (err, campaigns) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).json({ message: 'Gagal mengambil data kampanye.' });
-            }
-
-            // Format mata uang untuk setiap campaign
-            campaigns.forEach(campaign => {
-                campaign.amountCollected = formatCurrency(campaign.amountCollected);
-                campaign.goalAmount = formatCurrency(campaign.goalAmount);
-            });
-
-            // Tampilkan hasil
-            res.render('index', { imageData, dokumentasi, campaigns });
-        });
+        // Render page without campaigns data - will be loaded via API
+        res.render('index', { imageData, dokumentasi, campaigns: [] });
 
     } catch (error) {
         console.error('Error di getIndex:', error);
